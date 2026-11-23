@@ -1,5 +1,7 @@
 # CLOUD-002 — A published report was silently modified
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail Cloud Team · **Role:** Junior Cloud Engineer · **Prerequisite:** CLOUD-001
 
 ## Incident
@@ -47,3 +49,29 @@ python tools/apprentice.py check cloud-002
 **Security:** This is a local filesystem teaching simulation, not a cloud storage service. Never point it at sensitive directories or production data.
 
 **References:** https://docs.python.org/3/library/hashlib.html , https://docs.aws.amazon.com/AmazonS3/latest/userguide/checking-object-integrity.html
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+, standard library only; disposable local object store directory. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/storage.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/cloud-002/storage.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/cloud-002
+python tools/apprentice.py start cloud-002
+python tools/apprentice.py check cloud-002
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Publish the same bytes twice, then attempt a conflicting write and a tampered download.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [CLOUD-004](../cloud-004/README.md), [CLOUD-005](../cloud-005/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

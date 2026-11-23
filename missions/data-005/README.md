@@ -1,5 +1,7 @@
 # DATA-005 — Kafka replay duplicates wallet credits after a consumer crash
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail · **Role:** Streaming Data Engineer · **Prerequisite:** RETAIL-002
 
 ## Production-style incident
@@ -72,3 +74,29 @@ Do not claim that running unit tests is the same as verifying live Kafka semanti
 **Official references:** https://kafka.apache.org/documentation/#semantics and https://www.sqlite.org/lang_transaction.html
 
 **Status:** prototype. The broker smoke harness has now passed in maintainer CI against a real local Apache Kafka Docker broker and confidential reference solution. This verifies a single-node, one-partition crash/replay test, **not** a production multi-broker deployment, partition rebalance exercise or independent learner submission.
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+/SQLite for the basic grader; optional real Kafka smoke requires Docker and kafka-python. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/inbox.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/data-005/inbox.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/data-005
+python tools/apprentice.py start data-005
+python tools/apprentice.py check data-005
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Crash after committing the SQLite ledger but before broker acknowledgment; replay without double credit.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [DATA-006](../data-006/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

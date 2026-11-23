@@ -1,5 +1,7 @@
 # DATA-006 — Airflow retry/backfill republishes stale or conflicting daily totals
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail · **Role:** Data Platform Engineer · **Prerequisites:** RETAIL-003, DATA-004 and DATA-005
 
 ## The incident
@@ -92,3 +94,29 @@ For an optional Airflow SDK examination, follow current docs at https://airflow.
 5. What is your rollback protocol when an incorrect partition has already been published?
 
 **Status:** prototype. Local partition/failure tests, full-container DAG task execution and a scheduler-managed two-day backfill have passed maintainer CI. Public learner onboarding and production-like deployment remain unverified.
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+ for partition tests; optional Airflow 3 Task SDK/Docker for DAG execution. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/orchestrator.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/data-006/orchestrator.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/data-006
+python tools/apprentice.py start data-006
+python tools/apprentice.py check data-006
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Fail after staging a historical partition, then rerun without changing already published output.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [Local reference capstone](../../capstones/atlas-retail-platform/README.md) and [planned integrated project](../../docs/PUBLIC_CURRICULUM.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

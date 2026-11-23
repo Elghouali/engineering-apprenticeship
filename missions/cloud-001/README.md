@@ -1,5 +1,7 @@
 # CLOUD-001 — Reporting API fails intermittently
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail Cloud Team · **Role:** Junior Cloud/Platform Engineer
 
 ## Simulated incident
@@ -45,3 +47,29 @@ Never send a real financial request in this exercise. The transport is injected 
 - [ ] PR explains timeouts, retries, idempotency and design trade-offs.
 
 **Open references:** https://developer.mozilla.org/en-US/docs/Web/HTTP/Status ; https://docs.python.org/3/library/time.html
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+, standard library only; injected transport, no real external API. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/client.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/cloud-001/client.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/cloud-001
+python tools/apprentice.py start cloud-001
+python tools/apprentice.py check cloud-001
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Show that retryable 503 gets bounded backoff while a non-retryable 404 is returned without retry.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [CLOUD-002](../cloud-002/README.md), [CLOUD-003](../cloud-003/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)
