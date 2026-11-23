@@ -9,6 +9,7 @@ x-atlas-env: &atlas-env
   ATLAS_S3_BUCKET: atlas-reporting-demo
   ATLAS_TOPIC: atlas-payment-events
   ATLAS_DATE: "2026-11-20"
+  ATLAS_SPARK_JDBC_PARTITIONS: "4"
 
 services:
   postgres:
