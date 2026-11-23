@@ -87,3 +87,28 @@ jobs:
         run: |
           cd capstones/atlas-retail-integrated
           docker compose --profile tools --profile spark --profile api down -v --remove-orphans || true
+  
+  airflow-integrated-dag:
+    # The local multi-container execution is a maintainer-only smoke job.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Compose configuration
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml --profile airflow config --quiet
+      - name: Airflow 3 Task SDK actually runs shared integrated platform
+        run: bash capstones/atlas-retail-integrated/ci/airflow.sh
+      - name: Inspect fault context
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile airflow ps || true
+          docker compose --profile airflow logs --tail=100 || true
+      - name: Always tear down synthetic containers and volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile airflow --profile tools --profile api down -v --remove-orphans || true
