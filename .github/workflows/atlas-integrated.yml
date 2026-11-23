@@ -74,7 +74,7 @@ jobs:
           persist-credentials: false
       - name: Validate Spark Compose wiring before launch
         run: docker compose -f capstones/atlas-retail-integrated/compose.yaml --profile spark config --quiet
-      - name: Real PySpark computation over PostgreSQL snapshot and S3 artifact
+      - name: Real partitioned PySpark JDBC read over PostgreSQL with >1000 rows and S3 replay
         run: bash capstones/atlas-retail-integrated/ci/spark.sh
       - name: Inspect container state on failure
         if: failure()
