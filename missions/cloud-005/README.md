@@ -1,5 +1,7 @@
 # CLOUD-005 — Finance reports bucket has excessive IAM privileges
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Atlas Retail | Cloud Security Engineer | Prerequisites: CLOUD-002, CLOUD-004**
 
 ## Incident
@@ -34,3 +36,29 @@ Post-launch local commands:
 The public contract has a correct implementation in a separate private repository and passes Linux/Windows tests. See [Cloud sprint evidence](../../docs/CLOUD_SPRINT_EVIDENCE.md).
 
 These are static policy-structure checks only. AWS IAM policy simulation, identity/resource policy interplay, organization controls and cloud permission evaluation were not performed.
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+; JSON identity-policy structure only. No AWS authorization or simulator run. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/policy.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/cloud-005/policy.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/cloud-005
+python tools/apprentice.py start cloud-005
+python tools/apprentice.py check cloud-005
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Show exactly which S3 ARNs and actions are permitted, and what policy evaluation remains untested.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [Local reference capstone](../../capstones/atlas-retail-platform/README.md) and [planned integrated project](../../docs/PUBLIC_CURRICULUM.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

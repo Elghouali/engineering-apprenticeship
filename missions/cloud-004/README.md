@@ -1,5 +1,7 @@
 # CLOUD-004 — Terraform plan would destroy a protected service
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Atlas Retail | Cloud Platform Engineer | Prerequisites: CLOUD-003, CLOUD-002**
 
 ## Incident
@@ -43,3 +45,29 @@ Explain replacement action ordering, why resource_drift differs from resource_ch
 The public contract has a correct implementation in a separate private repository and passes Linux/Windows tests. See [Cloud sprint evidence](../../docs/CLOUD_SPRINT_EVIDENCE.md).
 
 The private CI generated Terraform 1.12.2 plan JSON from the built-in terraform_data resource. Destructive/drift/public-SSH cases were simulated and unit-checked, not reproduced in a real cloud provider.
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+ for policy tests; optional Terraform CLI and built-in terraform_data resource, no cloud credentials. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/plan_guard.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/cloud-004/plan_guard.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/cloud-004
+python tools/apprentice.py start cloud-004
+python tools/apprentice.py check cloud-004
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Detect delete/replacement actions, public SSH and resource drift before approving a saved plan.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [CLOUD-005](../cloud-005/README.md), [CLOUD-006](../cloud-006/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)
