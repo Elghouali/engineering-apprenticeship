@@ -29,9 +29,9 @@ A complete public learner journey must work without founder intervention: read a
 - [x] Verify initial bounded PySpark 4.0.3 bridge against PostgreSQL and S3 (superseded by partitioned JDBC read below)
 - [x] Verify an actual Airflow 3 Task SDK DAG executing the SAME Kafka, PostgreSQL and S3 stages, with 5 accepted events and verified 22,000 cents
 - [x] Replace the fixed 1,000-event driver snapshot with direct partitioned PostgreSQL JDBC Spark reads; verify 2,403 durable events and immutable report replay in real local CI
-- [ ] Prove much larger and multi-worker Spark performance/recovery, integrated historical Airflow scheduler backfills and Kubernetes deployment/recovery
-- [ ] Verify newly added integrated Airflow scheduler-managed two-date backfills and protected/replay-safe business partitions in CI (implementation exists; evidence pending)
-- [ ] Verify new Kind integration: genuine API->PostgreSQL/S3, readiness, failed image rollout and rollback (implementation exists; CI pending; Kafka remains outside Kind)
+- [ ] Prove much larger and multi-worker Spark performance/recovery, scheduler failure injection and fully Kubernetes-hosted streaming deployment (current Kind validates only reporting/data-serving slice)
+- [x] Verify integrated Airflow scheduler-managed two-date backfills and replay-safe business partitions in CI ([seven-job integration run](https://github.com/Elghouali/engineering-apprenticeship/actions/runs/45243392488)); multi-worker resilience remains open
+- [x] Verify disposable Kind API→PostgreSQL/S3 readiness, failed image rollout and rollback in real CI ([seven-job integration run](https://github.com/Elghouali/engineering-apprenticeship/actions/runs/45243392488)); Kafka remains outside Kind
 - [ ] Build and independently grade learner-authored changes across all five connected capstone GitHub Issues
 - [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook
 - [x] Platform integrity, local SQLite/HTTP capstone and prototype-starter checks passed on Ubuntu and Windows GitHub runners
