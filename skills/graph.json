@@ -67,6 +67,29 @@
         "git-basics"
       ],
       "description": "DNS, TCP, subnet routes and service access"
+    },
+    {
+      "id": "data-observability",
+      "prerequisites": [
+        "data-quality",
+        "testing"
+      ],
+      "description": "Freshness, watermarks, data SLIs and on-call response"
+    },
+    {
+      "id": "checksums",
+      "prerequisites": [
+        "python-data"
+      ],
+      "description": "Content-addressing and integrity verification"
+    },
+    {
+      "id": "object-storage",
+      "prerequisites": [
+        "cloud-networking",
+        "checksums"
+      ],
+      "description": "Safe object keys, immutability, ETags and access controls"
     }
   ]
 }

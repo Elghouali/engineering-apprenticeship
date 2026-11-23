@@ -23,7 +23,7 @@ class PlatformTests(unittest.TestCase):
             self.assertTrue((ROOT / item["starter"]).is_file())
             self.assertTrue((ROOT / item["grader"]).is_dir())
             self.assertTrue(item["review"])
-            self.assertEqual(item["status"], "ready")
+            self.assertIn(item["status"], ("prototype", "ready"))
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_skill_dependency_graph_is_acyclic(self):
@@ -72,6 +72,33 @@ class PlatformTests(unittest.TestCase):
         for mission in items:
             for prerequisite in mission.get("prerequisites", []):
                 self.assertIn(prerequisite, by_id)
+
+    def test_no_cycle_in_mission_prerequisites(self):
+        missions = {m["id"]: m for m in json.loads(CATALOG.read_text())["missions"]}
+        visiting, visited = set(), set()
+
+        def visit(mid):
+            self.assertNotIn(mid, visiting, "cyclic mission graph")
+            if mid in visited:
+                return
+            visiting.add(mid)
+            for predecessor in missions[mid].get("prerequisites", []):
+                self.assertIn(predecessor, missions)
+                visit(predecessor)
+            visiting.remove(mid)
+            visited.add(mid)
+
+        for mid in missions:
+            visit(mid)
+
+    def test_mission_paths_are_inside_repo(self):
+        from tools import apprentice
+        for mission in apprentice.missions():
+            with self.subTest(mission=mission["id"]):
+                for key in ("path", "starter", "submission", "grader"):
+                    apprentice.path_under(ROOT, mission[key])
+                self.assertTrue(mission["submission"].startswith("submissions/"))
+                self.assertNotEqual(mission["starter"], mission["submission"])
 
     def test_start_copies_but_never_overwrites_submission(self):
         import tempfile

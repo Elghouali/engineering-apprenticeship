@@ -12,9 +12,10 @@ A complete public learner journey must work without founder intervention: read a
 
 - [x] GitHub-native mission scaffolding, company story and skills graph
 - [x] Basic platform tests and least-privilege CI
-- [ ] Multiple connected Big Data missions with validated reference implementations
+- [ ] Multiple connected Big Data missions with verified correct reference implementations (five prototypes exist across tracks)
 - [ ] Multiple connected Cloud Engineering missions including local networking and containers
-- [ ] An independently verified end-to-end Data/Cloud project and recovery runbook
+- [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
+- [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook
 - [ ] Tests verified on Windows and Linux, with documented prerequisites
 - [ ] Failure injection and cleanup instructions for every mission
 - [ ] Versioning policy that does not break ongoing learner work

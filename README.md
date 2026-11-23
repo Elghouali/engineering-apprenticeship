@@ -31,8 +31,16 @@ GitHub itself is the classroom: Issues are work requests, branches are experimen
 | [RETAIL-001](missions/retail-001/README.md) | Trainee Data Engineer | Duplicate/cancelled sales distort revenue | Git, Python, validation, exact money |
 | [RETAIL-002](missions/retail-002/README.md) | Junior Data Engineer | Payment API retry creates duplicate row | SQL, transactions, idempotency |
 | [CLOUD-001](missions/cloud-001/README.md) | Trainee Cloud Engineer | HTTP 503 interrupts reporting API | HTTP, network errors, bounded retries |
+| [RETAIL-003](missions/retail-003/README.md) | On-call Data Engineer | Pipeline green but source data stale | Freshness SLOs, monitoring, incidents |
+| [CLOUD-002](missions/cloud-002/README.md) | Junior Cloud Engineer | Published artifact silently overwritten | Object storage, SHA-256, safe keys |
 
 These starter missions are part of the academy **under construction**. The full progression from foundations through Spark, Kafka, Cloud and capstone delivery has not yet been completed or integration-verified.
+
+## Runnable end-to-end reference system
+
+The [Atlas Retail Data Platform](capstones/atlas-retail-platform/README.md) combines CSV contracts, idempotent processing, SQLite, Gold revenue output, immutable release folders, cryptographic artifact checks and data freshness monitoring. It runs locally without any paid cloud services, and CI executes its integration tests.
+
+This reference is for **maintainer validation and future cumulative incidents**; the learner capstone assignment is still being developed.
 
 ## Core developer commands
 

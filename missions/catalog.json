@@ -6,7 +6,7 @@
       "name": "Incorrect revenue after ETL retry",
       "company": "atlas-retail",
       "level": "trainee",
-      "status": "ready",
+      "status": "prototype",
       "path": "missions/retail-001",
       "starter": "missions/retail-001/starter/pipeline.py",
       "submission": "submissions/retail-001/pipeline.py",
@@ -31,7 +31,7 @@
       "name": "Payment idempotency after API timeout",
       "company": "atlas-retail",
       "level": "junior",
-      "status": "ready",
+      "status": "prototype",
       "path": "missions/retail-002",
       "starter": "missions/retail-002/starter/payment.py",
       "submission": "submissions/retail-002/payment.py",
@@ -56,7 +56,7 @@
       "name": "Reporting API outage and safe GET retries",
       "company": "atlas-retail",
       "level": "trainee",
-      "status": "ready",
+      "status": "prototype",
       "path": "missions/cloud-001",
       "starter": "missions/cloud-001/starter/client.py",
       "submission": "submissions/cloud-001/client.py",
@@ -66,6 +66,57 @@
         "git-branches",
         "cloud-networking",
         "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ]
+    },
+    {
+      "id": "retail-003",
+      "name": "Pipeline green, source data stale",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/retail-003",
+      "starter": "missions/retail-003/starter/monitor.py",
+      "submission": "submissions/retail-003/monitor.py",
+      "grader": "missions/retail-003/tests",
+      "prerequisites": [
+        "retail-001",
+        "retail-002"
+      ],
+      "skills": [
+        "data-observability",
+        "testing",
+        "data-quality"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ]
+    },
+    {
+      "id": "cloud-002",
+      "name": "Published report overwritten without integrity check",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/cloud-002",
+      "starter": "missions/cloud-002/starter/storage.py",
+      "submission": "submissions/cloud-002/storage.py",
+      "grader": "missions/cloud-002/tests",
+      "prerequisites": [
+        "cloud-001"
+      ],
+      "skills": [
+        "object-storage",
+        "checksums",
+        "cloud-networking"
       ],
       "review": [
         "Explain",

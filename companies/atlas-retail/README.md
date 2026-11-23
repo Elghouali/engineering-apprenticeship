@@ -17,13 +17,14 @@ The *same codebase and business requirements* evolve:
 | --- | --- | --- |
 | 1 — RETAIL-001 | Incorrect revenue from duplicate, invalid and cancelled orders | Git, Python, contracts, tests |
 | 2 — RETAIL-002 (prototype ready) | An API retry creates duplicate order records | SQL constraints, idempotency, transactions |
-| 3 — RETAIL-003 (planned) | ETL passes but yesterday's report is stale | monitoring, freshness SLOs, on-call response |
+| 3 — RETAIL-003 (prototype) | ETL passes but yesterday's report is stale | monitoring, freshness SLOs, on-call response |
 | 4 — RETAIL-004 (planned) | Source feed no longer fits on one worker | Spark plans, shuffle, partitions |
 | 5 — RETAIL-005 (planned) | Event consumer replays and doubles downstream effects | Kafka offset semantics, dedup |
 
 Later changes will **build upon existing decisions**, teaching ownership and maintenance instead of isolated toy exercises.
 
-**A second concrete Cloud track prototype is available:** [CLOUD-001](../../missions/cloud-001/README.md), addressing HTTP outage retries. Both tracks still require deeper advanced missions before public launch.
+**A second concrete Cloud track prototype is available:** [CLOUD-001](../../missions/cloud-001/README.md), addressing HTTP outage retries, followed by [CLOUD-002](../../missions/cloud-002/README.md), protecting artifact integrity.
+The [local end-to-end reference data platform](../../capstones/atlas-retail-platform/README.md) links these operational concerns into an actual system. Both tracks still require deeper advanced missions before public launch.
 
 ## What counts as success
 
