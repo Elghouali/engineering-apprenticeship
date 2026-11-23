@@ -118,20 +118,26 @@ flowchart LR
   O --> API["Verified reporting API"]
 ~~~
 
-### Spark: parity, S3 publication, replay
+### Spark: partitioned PostgreSQL JDBC ingestion, SQL parity, S3 replay
 
-A separate Spark image reads a **bounded driver snapshot** of the already deduplicated PostgreSQL records (maximum 1,000 events). It aggregates integer-cent paid revenue using real local Spark 4.0.3, compares the result to the PostgreSQL business contract, writes `gold-spark/2026-11-20/revenue.json` to the same S3-compatible store, reads it back and confirms a second run is replay-safe.
+The Spark runtime now reads the durable `business_events` table **directly with PostgreSQL JDBC**. It filters a validated business date in PostgreSQL and partitions the read using a deterministic hash of `event_id` (default **four JDBC partitions**). The prior 1,000-event driver snapshot is no longer used. Spark performs the financial aggregation in executors; **only the bounded final merchant aggregates** are collected for a JSON report (maximum 10,000 merchants).
+
+An independent PostgreSQL SQL aggregate is read before and after the Spark job and must exactly match Spark's paid-only integer-cent totals, paid event count, accepted event count and merchant totals. The report is published under `gold-spark/<date>/revenue.json` with deterministic provenance metadata (source table, input count, partition count, Spark version and SHA-256 of the SQL reference). A replay must yield byte-identical data; unexpected changes **fail closed** rather than overwriting a published object.
 
 ~~~bash
-# From the capstone directory, with a clean disposable stack:
+# Disposable lab only. Run from capstones/atlas-retail-integrated:
 docker compose up -d postgres kafka objectstore
 docker compose build runner spark
 docker compose run --rm runner demo
-docker compose run --rm spark
-docker compose run --rm spark
+docker compose run --rm spark                     # creates 2026-11-20 artifact
+docker compose run --rm spark                     # byte-identical replay
+docker compose run --rm --entrypoint python runner /app/seed_scale.py
+docker compose run --rm -e ATLAS_DATE=2026-11-21 spark  # 2,403 durable events
 ~~~
 
-The first Spark publish returns `created`; the identical rerun returns `replayed`. **This is not a scalable Spark JDBC/CDC implementation**: the source snapshot is collected into the driver before Spark processing, and the input contains only five unique business events. [CAPSTONE-003](tickets/CAPSTONE-003.md) will replace this bridge with a scalable, independently benchmarked ingestion design.
+**Verified on real GitHub Actions:** both five-event and **2,403-event** dates used four JDBC partitions, SQL reconciliation and created/replayed S3 artifacts. [Job evidence](https://github.com/Elghouali/engineering-apprenticeship/actions/runs/45238994332) · [full evidence and limitations](../../docs/INTEGRATED_CAPSTONE_EVIDENCE.md).
+
+**What this does *not* prove:** Spark still runs in local mode, the hash-based JDBC strategy may scan PostgreSQL multiple times, the underlying JDBC connections do not share one exported MVCC snapshot, the report is JSON with bounded merchant cardinality, and no statistically sound multi-run skew/scale benchmark or concurrent-writer recovery test has been completed. Production-style CDC or immutable Parquet snapshots and distributed Spark clusters remain future work. [CAPSTONE-003](tickets/CAPSTONE-003.md) stays open.
 
 ### Airflow: real shared-pipeline tasks
 
@@ -173,7 +179,7 @@ atlas-retail-integrated/
 ├── tests/test_logic.py     # Portable contract/failure tests
 ├── ci/smoke.sh             # Disposable end-to-end crash/replay smoke run
 ├── ci/smoke_http.py        # Independent health and financial verification
-├── spark_job.py            # Real local Spark vs PostgreSQL financial parity
+├── spark_job.py            # Partitioned JDBC Spark; SQL parity and provenance
 ├── Dockerfile.spark        # Java 17 / PySpark 4.0.3 runtime
 ├── airflow/dags/           # Airflow 3 Task SDK shared application tasks
 ├── Dockerfile.airflow      # Real Airflow 3 task runtime
@@ -193,7 +199,7 @@ The baseline is **not** the student's completed answer. The academy will publish
 4. [CAPSTONE-004 — Orchestrate backfills with Airflow](tickets/CAPSTONE-004.md) — task dependencies, deterministic business dates, failure recovery.
 5. [CAPSTONE-005 — Deploy and recover the reporting API on Kubernetes](tickets/CAPSTONE-005.md) — Service, probes, rollout and incident triage.
 
-**Status distinction:** Tickets are an engineering backlog, not automatically finished graded assignments. Bounded real Spark and manually triggered Airflow integrations are now validated; scalable Spark ingestion, scheduler-managed integrated backfills and Kubernetes deployment are still future incident deliverables. The existing [12 standalone missions](../../missions/README.md) already have public contracts and private correct references, but the *integrated* assignment has not been independently completed.
+**Status distinction:** Tickets are an engineering backlog, not automatically finished graded assignments. A partitioned JDBC Spark ingestion path with a 2,403-event CI fixture and manually triggered Airflow are verified; scale/performance benchmarking, scheduler-managed integrated backfills and Kubernetes deployment remain future incident deliverables. The existing [12 standalone missions](../../missions/README.md) already have public contracts and private correct references, but the *integrated* assignment has not been independently completed.
 
 ## Honest scope and security
 
