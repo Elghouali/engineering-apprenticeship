@@ -69,6 +69,17 @@ services:
       kafka: {condition: service_started}
       objectstore: {condition: service_started}
     networks: [platform]
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    image: atlas-retail-integrated-spark:dev
+    profiles: [spark]
+    environment: *atlas-env
+    depends_on:
+      postgres: {condition: service_healthy}
+      objectstore: {condition: service_started}
+    networks: [platform]
   api:
     build: .
     image: atlas-retail-integrated:dev
