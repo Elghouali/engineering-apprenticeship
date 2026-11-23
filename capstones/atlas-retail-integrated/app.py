@@ -176,8 +176,17 @@ def demo() -> dict:
 
 class API(BaseHTTPRequestHandler):
     def do_GET(self):
-        if self.path not in ("/health", "/v1/revenue"):
+        if self.path not in ("/live", "/health", "/v1/revenue"):
             self.send_error(404)
+            return
+        if self.path == "/live":
+            result, code = {"status": "alive"}, 200
+            body = json.dumps(result, sort_keys=True).encode("utf-8")
+            self.send_response(code)
+            self.send_header("Content-Type", "application/json")
+            self.send_header("Content-Length", str(len(body)))
+            self.end_headers()
+            self.wfile.write(body)
             return
         try:
             report = verify()
