@@ -76,14 +76,9 @@ Profile description:
 
 > Engineering student building Engineering Apprenticeship, a public pre-release GitHub-native learning project for realistic Data and Cloud engineering incidents, CI, PR reviews and end-to-end systems.
 
-Founder-led publishing pillars:
+**Founder launch decision (2026-11-23):** **Hold founder-led promotional posts and the LinkedIn announcement until v1.0 has completed its release gates.** Do not schedule or publish a pre-release announcement. The public GitHub development repository remains visible, but we are not actively advertising its launch.
 
-1. **Why:** the gap between following tutorials and defending real engineering decisions.
-2. **Build in public:** explain architecture, commits, CI evidence, genuine failures and trade-offs.
-3. **Teach in public:** show the issue-driven learning loop without leaking private answers.
-4. **Invite feedback:** ask reviewers and prospective learners about onboarding and usability.
-
-Early CTA: **follow the public development work, review the architecture and share feedback**. Do not tell readers to enroll or submit assessed learner work yet.
+At v1.0, the founder's announcement should explain the unique workflow, show independently validated engineering evidence, link to the actual release and invite feedback. See [the held announcement draft](FOUNDER_ANNOUNCEMENT.md).
 
 ## Brand/governance gates before launch
 
@@ -93,5 +88,6 @@ Early CTA: **follow the public development work, review the architecture and sha
 - [ ] Confirm visuals and marketing claims match the learner-validated experience.
 - [ ] Add a social-preview PNG through GitHub repository settings if desired (GitHub may not render an SVG preview there).
 - [ ] Launch only after [public release checklist](../docs/PUBLIC_LAUNCH.md) passes.
+- [ ] Confirm founder approval for the final v1.0 LinkedIn announcement before publishing.
 
 **Current name decision:** retain the existing repository/product working name; avoid prematurely renaming repositories, links and docs during pre-release.
