@@ -123,3 +123,22 @@ jobs:
           persist-credentials: false
       - name: Execute two bounded scheduler-managed Airflow historical dates
         run: bash capstones/atlas-retail-integrated/ci/airflow_scheduler.sh
+
+  kubernetes-integrated-api:
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: false
+      - name: Install Kind
+        run: |
+          go install sigs.k8s.io/kind@v0.27.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: Run isolated Kubernetes service and broken rollout recovery
+        run: bash capstones/atlas-retail-integrated/ci/kind.sh
