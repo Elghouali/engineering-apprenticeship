@@ -1,5 +1,11 @@
 # Engineering Apprenticeship
 
+![Engineering Apprenticeship — Learn by fixing what breaks](branding/assets/ea-banner.svg)
+
+**Learn by fixing what breaks.** A GitHub-native engineering academy for realistic Data + Cloud engineering work.
+
+[Brand identity](branding/README.md) · [Founder's pre-release announcement draft](branding/FOUNDER_ANNOUNCEMENT.md)
+
 **Learn Big Data & Cloud Engineering by doing the work on GitHub.**
 
 > **PUBLIC PRE-RELEASE — not ready for learners or a v1 announcement.** This repository is visible while the curriculum is being built. All 12 missions are **prototypes**, and an independent beginner-to-capstone learner journey has **not** been verified. [Track the release gates](docs/PUBLIC_LAUNCH.md). **A public repository is not automatically open-source licensed**; redistribution terms are [awaiting owner approval](docs/LICENSING_DECISION.md).
