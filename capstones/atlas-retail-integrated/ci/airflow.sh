@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Disposable integrated DAG test, not a long-running scheduler proof.
+# Disposable Airflow 3 full DAG execution on two dates + replay; wipes demo volumes.
 set -Eeuo pipefail
 cd "$(dirname "$0")/.."
 cleanup() {
@@ -12,7 +12,10 @@ docker compose build airflow runner
 docker compose --profile airflow run --rm airflow bash -c '
   airflow db migrate &&
   airflow dags list &&
-  airflow dags test atlas_integrated_pipeline 2026-11-20
+  airflow dags test atlas_integrated_pipeline 2026-11-20T02:00:00+00:00 &&
+  airflow dags test atlas_integrated_pipeline 2026-11-21T02:00:00+00:00 &&
+  airflow dags test atlas_integrated_pipeline 2026-11-20T02:00:00+00:00
 '
-docker compose run --rm runner verify
-echo "PASS: Airflow 3 ran real Kafka -> PostgreSQL -> S3 -> verification tasks"
+docker compose run --rm -e ATLAS_DATE=2026-11-20 runner verify
+docker compose run --rm -e ATLAS_DATE=2026-11-21 runner verify
+echo "PASS: Airflow ran two isolated logical dates and replay on shared Kafka/PostgreSQL/S3"
