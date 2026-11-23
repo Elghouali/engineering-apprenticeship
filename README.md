@@ -117,7 +117,7 @@ This repo is **already public to inspect**, but the educational release has not 
 
 ## Open development roadmap
 
-1. **Integrated platform Stage 1 and bounded Stage 2 are verified in real local CI:** Kafka delivery, PostgreSQL replay-safe ledger, S3-compatible Gold, local reporting API, actual Spark computation and actual Airflow DAG tasks. [See the integrated platform](capstones/atlas-retail-integrated/README.md) and [verification evidence](docs/INTEGRATED_CAPSTONE_EVIDENCE.md). Real Kubernetes deployment, scalable distributed ingestion and independent learner acceptance remain outstanding.
+1. **Integrated platform stages verified in real local CI:** Kafka delivery, PostgreSQL replay-safe ledger, S3-compatible Gold, local reporting API, real partitioned Spark JDBC ingestion tested beyond the old 1,000-event limit, and real Airflow DAG tasks. The stack is still single-node and lacks large-scale benchmarks. [See the integrated platform](capstones/atlas-retail-integrated/README.md) and [verification evidence](docs/INTEGRATED_CAPSTONE_EVIDENCE.md). Real Kubernetes deployment, scalable distributed ingestion and independent learner acceptance remain outstanding.
 2. Build the **learner-assigned, end-to-end Data + Cloud capstone** connecting ingestion, Kafka, Spark, orchestration, storage, deployment, observability and incident recovery.
 3. Expand SQL/warehousing, multi-cloud foundations, production operations and resilient workloads.
 4. Run independent Windows/Linux fork → branch → CI → PR acceptance tests.
