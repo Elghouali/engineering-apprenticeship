@@ -15,7 +15,10 @@ A complete public learner journey must work without founder intervention: read a
 - [x] Eight current mission prototype contracts pass correct confidential reference solutions on Ubuntu and Windows
 - [x] Live single-node local Kafka replay and local PySpark functional integration verified in maintainer CI
 - [x] Airflow 3 Task SDK DAG object/dependency verification in maintainer CI
-- [ ] Complete advanced Big Data curriculum, full Airflow scheduling/backfill and measured Spark tuning evidence
+- [x] Measured Spark physical plan and baseline versus controlled salt=1/salt=8 timings documented, without claiming performance gains
+- [x] Real Airflow 3 `dags test` executed extract, validate, publish for two historical dates, including replay, with verified file output
+- [ ] Full Airflow scheduler-managed backfill and larger-scale Spark performance assessment
+- [ ] Complete advanced Big Data curriculum including SQL optimization and advanced production operations
 - [ ] Multiple connected Cloud Engineering missions including local networking and containers
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
 - [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook

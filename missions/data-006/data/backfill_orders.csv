@@ -1,0 +1,8 @@
+order_id,order_date,status,amount_cents
+A1,2026-11-19,paid,150
+A1,2026-11-19,paid,150
+A2,2026-11-19,cancelled,700
+B1,2026-11-20,paid,100
+B1,2026-11-20,paid,100
+B2,2026-11-20,cancelled,1000
+B3,2026-11-20,paid,50

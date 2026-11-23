@@ -56,6 +56,8 @@ SPARK_LIVE=1 python tools/apprentice.py check data-004
 
 A valid PySpark version and Java runtime are required for SPARK_LIVE=1. The dedicated private validation workflow uses a real local Spark session; no cloud resources are provisioned.
 
+**Measured maintainer evidence:** see the [Spark Skew Benchmark Report](../../docs/SPARK_BENCHMARK_EVIDENCE.md). A controlled comparison with the same replay checks showed no clear benefit from salting on an 80,000-row fixture. Your PR should explain when the technique is justified instead of promising faster execution.
+
 ## Engineering evidence
 
 - [ ] Screenshot or copied text of actual input skew counts and physical plan.

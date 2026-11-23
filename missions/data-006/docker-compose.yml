@@ -1,0 +1,25 @@
+# Safe, localhost-only educational DAG test. No published network ports.
+# Run only AFTER completing the DATA-006 submission in your own fork.
+services:
+  airflow:
+    image: apache/airflow:3.1.8
+    user: "${AIRFLOW_UID:-50000}:0"
+    environment:
+      AIRFLOW_HOME: /tmp/airflow-home
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      ACADEMY_DAILY_SOURCE: /opt/airflow/input/orders.csv
+      ACADEMY_DAILY_OUTPUT: /opt/airflow/output
+    volumes:
+      - ./tools/airflow-dags:/opt/airflow/dags:ro
+      - ../../submissions/data-006:/opt/airflow/reference:ro
+      - ./data/backfill_orders.csv:/opt/airflow/input/orders.csv:ro
+      - ./output:/opt/airflow/output
+    command:
+      - bash
+      - -c
+      - |
+        airflow db migrate &&
+        airflow dags test atlas_retail_backfill 2026-11-19 &&
+        airflow dags test atlas_retail_backfill 2026-11-20 &&
+        airflow dags test atlas_retail_backfill 2026-11-20

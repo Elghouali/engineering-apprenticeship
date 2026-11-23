@@ -47,7 +47,31 @@ This local pattern does not make filesystem writes and external database commits
 
 Implement build_airflow_dag() to return a DAG using the **Airflow 3 public Task SDK** and the blueprint above: schedule at 02:00 daily, catchup enabled, 2 retries, and extract -> validate -> publish dependencies. The DAG must use logical run date, not the wall-clock date, when materializing partitions.
 
-The default platform CI does not install or start Airflow. A future containerized Airflow scheduler/backfill test is a separate public launch gate; don't claim it passed.
+The default platform CI does not install Airflow. A **separate, private maintainer CI run has executed the actual Airflow 3 DAG tasks** for two historical dates using the full Airflow Docker image and verified the resulting partitions. This was run via `airflow dags test`, which is not the same as a continuously running scheduler. Full scheduler-managed backfill is a separate verification gate.
+
+### Optional reproducible Docker DAG test for learners
+
+After implementing the mission on a personal branch, use the included [Docker Compose file](docker-compose.yml). The [DAG discovery wrapper](tools/airflow-dags/atlas_retail_backfill.py) is only an adapter; it imports **your** `build_airflow_dag()` and does not supply an answer.
+
+From the repository root:
+
+~~~bash
+python tools/apprentice.py start data-006
+# Then implement, unit-test and commit the solution.
+~~~
+
+For Linux/macOS from `missions/data-006`:
+
+~~~bash
+mkdir -p output
+export AIRFLOW_UID=$(id -u)
+docker compose run --rm airflow
+docker compose down
+~~~
+
+For Windows PowerShell, create `output` using `New-Item -ItemType Directory -Force output` and then run `docker compose run --rm airflow` from the same mission folder.
+
+The container tests 2026-11-19, 2026-11-20 and a second attempt for 2026-11-20. Expected paid revenue is 150 cents per date, with two and three accepted orders respectively. The folder `output/` is gitignored. There are no public network ports or real cloud credentials. A real scheduler/worker deployment, external persistence and security boundaries require further work.
 
 ## Learner workflow
 
@@ -67,4 +91,4 @@ For an optional Airflow SDK examination, follow current docs at https://airflow.
 4. How would two concurrent task attempts safely coordinate publication?
 5. What is your rollback protocol when an incorrect partition has already been published?
 
-**Status:** prototype; local partition/failure behavior testable, Airflow scheduler execution not yet verified.
+**Status:** prototype; local partition/failure tests, Airflow DAG structure and full-container DAG task executions verified by maintainer CI. Scheduler-managed backfill is a separate work item.
