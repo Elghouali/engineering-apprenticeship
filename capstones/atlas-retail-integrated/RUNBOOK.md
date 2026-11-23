@@ -71,4 +71,12 @@ Official references: https://www.postgresql.org/docs/16/index.html · https://ka
 
 **Never use S3 overwrite as a shortcut:** If a published partition differs from business state, stop and escalate. The single-writer lab's check-before-put is not a distributed conditional write or a concurrency guarantee.
 
+## Stage 3: new pre-release incident tests
+
+**Historical backfill:** `ci/airflow.sh` runs DAG tests for two dates and repeats the first. `ci/airflow_scheduler.sh` starts an isolated Airflow 3 scheduler and creates an explicit two-day backfill; validate each actual DagRun state rather than assuming a successful CLI creation means the tasks ran. Stop if a backfill tries to overwrite a changed historical object or mixes business dates. Both scripts destroy disposable demo data.
+
+**Kubernetes API:** `ci/kind.sh` creates its own disposable Kind cluster, installs synthetic PostgreSQL/S3 plus a one-time seed Job, and verifies the API over localhost port-forward. `/live` tests the process; `/health` fails closed when the business report cannot be trusted. A deliberately broken image must not replace the healthy API; use `kubectl -n atlas-lab rollout undo deployment/atlas-api` and verify the reporting endpoint and Ready endpoint count after recovery. Never run this training cleanup script against a valuable cluster or give it production secrets.
+
+**Limits:** Neither test currently proves production high availability, shared transactional snapshot, real Kubernetes Kafka, external TLS/Ingress, real secret management, durable volumes or multi-AZ DR. The two new CI jobs are **under verification**, not release-certified.
+
 [Public integration evidence](../../docs/INTEGRATED_CAPSTONE_EVIDENCE.md).
