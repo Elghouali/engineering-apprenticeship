@@ -129,6 +129,86 @@
         "Defend"
       ],
       "contract_version": 1
+    },
+    {
+      "id": "data-004",
+      "name": "Spark groupBy skew and replay-safe paid revenue",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/data-004",
+      "starter": "missions/data-004/starter/spark_job.py",
+      "submission": "submissions/data-004/spark_job.py",
+      "grader": "missions/data-004/tests",
+      "prerequisites": [
+        "retail-003"
+      ],
+      "skills": [
+        "spark-skew",
+        "distributed-systems",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "data-005",
+      "name": "Kafka delivery replay and durable SQLite inbox",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/data-005",
+      "starter": "missions/data-005/starter/inbox.py",
+      "submission": "submissions/data-005/inbox.py",
+      "grader": "missions/data-005/tests",
+      "prerequisites": [
+        "retail-002"
+      ],
+      "skills": [
+        "stream-replay",
+        "kafka",
+        "sql-transactions"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "data-006",
+      "name": "Airflow retry-safe daily publishing and historical backfill",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/data-006",
+      "starter": "missions/data-006/starter/orchestrator.py",
+      "submission": "submissions/data-006/orchestrator.py",
+      "grader": "missions/data-006/tests",
+      "prerequisites": [
+        "retail-003",
+        "data-004",
+        "data-005"
+      ],
+      "skills": [
+        "airflow-orchestration",
+        "batch-backfills",
+        "data-observability"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
     }
   ]
 }

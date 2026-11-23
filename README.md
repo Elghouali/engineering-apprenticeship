@@ -33,6 +33,11 @@ GitHub itself is the classroom: Issues are work requests, branches are experimen
 | [CLOUD-001](missions/cloud-001/README.md) | Trainee Cloud Engineer | HTTP 503 interrupts reporting API | HTTP, network errors, bounded retries |
 | [RETAIL-003](missions/retail-003/README.md) | On-call Data Engineer | Pipeline green but source data stale | Freshness SLOs, monitoring, incidents |
 | [CLOUD-002](missions/cloud-002/README.md) | Junior Cloud Engineer | Published artifact silently overwritten | Object storage, SHA-256, safe keys |
+| [DATA-004](missions/data-004/README.md) | Data Engineer | Slow skewed Spark job and replayed transactions | PySpark, shuffle, salting, correctness |
+| [DATA-005](missions/data-005/README.md) | Streaming Engineer | Kafka replay after durable ledger commit | Broker offsets, SQLite inbox, idempotency |
+| [DATA-006](missions/data-006/README.md) | Platform Engineer | Airflow backfill overwrites daily report | DAGs, retries, partitioned atomic publication |
+
+The advanced three missions are **not all live-service verified yet**. DATA-004 has opt-in real PySpark tests, DATA-005 simulates broker replay against durable SQLite, and DATA-006 tests partition task logic with an optional Airflow DAG structural check. See each mission for exact verification limits.
 
 These starter missions are part of the academy **under construction**. The full progression from foundations through Spark, Kafka, Cloud and capstone delivery has not yet been completed or integration-verified.
 

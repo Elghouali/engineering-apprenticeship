@@ -17,3 +17,11 @@ This is a **proposal**, not a claim that the following missions already have wor
 **Expansion rule:** introduce new companies or separate repositories only when they create a new realistic engineering context, independent deployment lifecycle, or substantial complexity. Reuse the existing [BigData Academy](https://github.com/Elghouali/BigData/tree/feature/academy-data-cloud-from-zero/academy) projects, but require the learner to rebuild the solution, not copy it.
 
 The longer-term aspiration is adaptive missions, human or AI-assisted code reviews, progressively evolving incidents and verified professional evidence. These are staged features, not shipped features.
+
+## Advanced Data Engineering sprint (prototype work)
+
+- [DATA-004](../missions/data-004/README.md): actual Spark skew investigation, salted aggregation and explicit replay handling; live Spark integration opt-in.
+- [DATA-005](../missions/data-005/README.md): durable inbox and ledger processing with simulated commit-before-ack crash; live Kafka broker pending.
+- [DATA-006](../missions/data-006/README.md): Airflow-style DAG and idempotent partition publishing/backfill; actual scheduler pending.
+
+All prototypes must pass private maintainer reference validation and receive an independent learner test before being marked ready.

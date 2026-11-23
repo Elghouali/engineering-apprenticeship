@@ -27,9 +27,9 @@ A learner gains this experience naturally while delivering each mission. The fir
 | Junior | Prevent duplicate payment after API retry | SQL ACID, constraints, idempotency | RETAIL-002 prototype |
 | Junior | Green ETL publishes stale business data | Watermarks, freshness SLOs, on-call | RETAIL-003 prototype |
 | Junior | Restore a broken warehouse SQL query | OLTP/OLAP, modeling, indexes, execution plan | Planned |
-| Engineer | Data pipeline fails during Airflow retry | DAGs, scheduling, backfill, retries | Planned |
-| Engineer | Spark job runs slowly under skew | Shuffle, partitioning, physical plans | Planned |
-| Engineer | Kafka replay produces duplicate side effect | Consumer offsets, transactions, inbox/outbox | Planned |
+| Engineer | Data pipeline fails during Airflow retry | DAGs, scheduling, backfill, retries | DATA-006 prototype; scheduler not live verified |
+| Engineer | Spark job runs slowly under skew | Shuffle, partitioning, physical plans | DATA-004 prototype; opt-in real Spark tests |
+| Engineer | Kafka replay produces duplicate side effect | Consumer offsets, transactions, inbox/outbox | DATA-005 prototype; broker simulated |
 | Senior simulation | Lakehouse table evolves and CDC consumer breaks | Schema evolution, Iceberg/Delta, data contracts | Planned |
 
 ## Track B: Cloud Engineering

@@ -90,6 +90,38 @@
         "checksums"
       ],
       "description": "Safe object keys, immutability, ETags and access controls"
+    },
+    {
+      "id": "spark-skew",
+      "prerequisites": [
+        "distributed-systems",
+        "data-quality"
+      ],
+      "description": "Shuffle planning, skew analysis, key salting and exact aggregations"
+    },
+    {
+      "id": "stream-replay",
+      "prerequisites": [
+        "data-idempotency",
+        "sql-transactions"
+      ],
+      "description": "Crash after durable commit, reprocessing, and broker acknowledgement boundaries"
+    },
+    {
+      "id": "batch-backfills",
+      "prerequisites": [
+        "data-quality",
+        "data-observability"
+      ],
+      "description": "Business-date partitions, retries, idempotent publication and recovery"
+    },
+    {
+      "id": "airflow-orchestration",
+      "prerequisites": [
+        "batch-backfills",
+        "testing"
+      ],
+      "description": "DAG task dependencies, retry semantics, catchup and scheduling"
     }
   ]
 }
