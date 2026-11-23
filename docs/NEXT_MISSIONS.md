@@ -22,6 +22,6 @@ The longer-term aspiration is adaptive missions, human or AI-assisted code revie
 
 - [DATA-004](../missions/data-004/README.md): skew investigation and replay-safe Spark aggregation; a [measured local comparison](SPARK_BENCHMARK_EVIDENCE.md) is published; larger independent benchmarks still pending.
 - [DATA-005](../missions/data-005/README.md): durable inbox and ledger processing with simulated crash and a real single-node Kafka smoke test validated in maintainer CI.
-- [DATA-006](../missions/data-006/README.md): real Airflow DAG tasks executed for two historical dates, with a published Docker Compose learner harness; scheduler-managed backfill still pending.
+- [DATA-006](../missions/data-006/README.md): real Airflow DAG tasks executed for two historical dates, with a published Docker Compose learner harness; controlled scheduler-managed backfill passed in maintainer CI; multi-worker deployment is unverified.
 
 All prototypes must pass private maintainer reference validation and receive an independent learner test before being marked ready.

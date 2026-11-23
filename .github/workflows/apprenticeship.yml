@@ -54,3 +54,15 @@ jobs:
       - name: Check learner submission (when present)
         run: |
           python tools/apprentice.py check-all
+  
+  compose-syntax:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate learner-facing Airflow Docker Compose contract
+        run: docker compose -f missions/data-006/docker-compose.yml config --quiet
+      - name: Validate local Kafka broker Docker Compose contract
+        run: docker compose -f missions/data-005/docker-compose.yml config --quiet

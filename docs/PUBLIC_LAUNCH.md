@@ -17,7 +17,8 @@ A complete public learner journey must work without founder intervention: read a
 - [x] Airflow 3 Task SDK DAG object/dependency verification in maintainer CI
 - [x] Measured Spark physical plan and baseline versus controlled salt=1/salt=8 timings documented, without claiming performance gains
 - [x] Real Airflow 3 `dags test` executed extract, validate, publish for two historical dates, including replay, with verified file output
-- [ ] Full Airflow scheduler-managed backfill and larger-scale Spark performance assessment
+- [x] Airflow 3 standalone scheduler + LocalExecutor created and completed two historical backfill runs; outputs independently verified
+- [ ] Independent larger-scale Spark performance experiments and production-like multi-worker Airflow resilience
 - [ ] Complete advanced Big Data curriculum including SQL optimization and advanced production operations
 - [ ] Multiple connected Cloud Engineering missions including local networking and containers
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI

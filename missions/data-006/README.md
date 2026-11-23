@@ -47,7 +47,7 @@ This local pattern does not make filesystem writes and external database commits
 
 Implement build_airflow_dag() to return a DAG using the **Airflow 3 public Task SDK** and the blueprint above: schedule at 02:00 daily, catchup enabled, 2 retries, and extract -> validate -> publish dependencies. The DAG must use logical run date, not the wall-clock date, when materializing partitions.
 
-The default platform CI does not install Airflow. A **separate, private maintainer CI run has executed the actual Airflow 3 DAG tasks** for two historical dates using the full Airflow Docker image and verified the resulting partitions. This was run via `airflow dags test`, which is not the same as a continuously running scheduler. Full scheduler-managed backfill is a separate verification gate.
+The default platform CI does not install Airflow. A **separate, private maintainer CI run has executed the actual Airflow 3 DAG tasks** for two historical dates using the full Airflow Docker image and verified the resulting partitions. This was run via `airflow dags test`, which is not the same as a continuously running scheduler. A separate [local Airflow scheduler verification](../../docs/AIRFLOW_BACKFILL_EVIDENCE.md) has also passed: two scheduler-managed backfill runs completed successfully and their published output was independently checked. This does **not** validate a production multi-worker Airflow deployment.
 
 ### Optional reproducible Docker DAG test for learners
 
@@ -91,4 +91,4 @@ For an optional Airflow SDK examination, follow current docs at https://airflow.
 4. How would two concurrent task attempts safely coordinate publication?
 5. What is your rollback protocol when an incorrect partition has already been published?
 
-**Status:** prototype; local partition/failure tests, Airflow DAG structure and full-container DAG task executions verified by maintainer CI. Scheduler-managed backfill is a separate work item.
+**Status:** prototype. Local partition/failure tests, full-container DAG task execution and a scheduler-managed two-day backfill have passed maintainer CI. Public learner onboarding and production-like deployment remain unverified.
