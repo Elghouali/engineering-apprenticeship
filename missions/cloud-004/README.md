@@ -36,3 +36,10 @@ After launch, use:
 Explain replacement action ordering, why resource_drift differs from resource_changes, what -refresh-only observes, why a saved plan cannot be treated as a permanent approval, why no terraform apply belongs in an untrusted PR, and your rollback/approval process.
 
 **Status: prototype.** Official references: https://developer.hashicorp.com/terraform/internals/json-format and https://developer.hashicorp.com/terraform/cli/commands/plan
+
+
+## Maintainer validation evidence
+
+The public contract has a correct implementation in a separate private repository and passes Linux/Windows tests. See [Cloud sprint evidence](../../docs/CLOUD_SPRINT_EVIDENCE.md).
+
+The private CI generated Terraform 1.12.2 plan JSON from the built-in terraform_data resource. Destructive/drift/public-SSH cases were simulated and unit-checked, not reproduced in a real cloud provider.

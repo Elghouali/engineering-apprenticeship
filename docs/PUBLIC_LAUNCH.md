@@ -12,7 +12,7 @@ A complete public learner journey must work without founder intervention: read a
 
 - [x] GitHub-native mission scaffolding, company story and skills graph
 - [x] Basic platform tests and least-privilege CI
-- [x] Eight current mission prototype contracts pass correct confidential reference solutions on Ubuntu and Windows
+- [x] Twelve current mission prototype contracts pass correct confidential reference solutions on Ubuntu and Windows
 - [x] Live single-node local Kafka replay and local PySpark functional integration verified in maintainer CI
 - [x] Airflow 3 Task SDK DAG object/dependency verification in maintainer CI
 - [x] Measured Spark physical plan and baseline versus controlled salt=1/salt=8 timings documented, without claiming performance gains
@@ -20,8 +20,8 @@ A complete public learner journey must work without founder intervention: read a
 - [x] Airflow 3 standalone scheduler + LocalExecutor created and completed two historical backfill runs; outputs independently verified
 - [ ] Independent larger-scale Spark performance experiments and production-like multi-worker Airflow resilience
 - [ ] Complete advanced Big Data curriculum including SQL optimization and advanced production operations
-- [ ] Validate CLOUD-003/004/005 private references, actual Docker DNS connectivity and Terraform plan JSON (prototypes implemented; not yet verified)
-- [ ] Verify CLOUD-006 Kubernetes live kind rollout, readiness and rollback against the confidential reference
+- [x] CLOUD-003/004/005 correct references passed; Docker service-to-service DNS and provider-free Terraform plan JSON integration verified on local CI
+- [x] CLOUD-006 real local kind: two Ready pods, Service HTTP, deliberately broken image rollout and successful rollback
 - [ ] Broader Cloud Engineering, including resilient workloads, multi-AZ and multicloud recovery
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
 - [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook

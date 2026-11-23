@@ -27,3 +27,10 @@ Post-launch local commands:
     python tools/apprentice.py check cloud-005
 
 **Status: prototype.** Official references: https://docs.aws.amazon.com/IAM/latest/UserGuide/access_policies.html
+
+
+## Maintainer validation evidence
+
+The public contract has a correct implementation in a separate private repository and passes Linux/Windows tests. See [Cloud sprint evidence](../../docs/CLOUD_SPRINT_EVIDENCE.md).
+
+These are static policy-structure checks only. AWS IAM policy simulation, identity/resource policy interplay, organization controls and cloud permission evaluation were not performed.

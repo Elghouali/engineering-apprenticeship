@@ -31,3 +31,10 @@ Explain network namespaces, DNS service naming, loopback host binding vs contain
 **Status:** prototype; full independent learner onboarding not yet tested.
 
 Official documentation: https://docs.docker.com/compose/how-tos/networking/
+
+
+## Maintainer validation evidence
+
+The public contract has a correct implementation in a separate private repository and passes Linux/Windows tests. See [Cloud sprint evidence](../../docs/CLOUD_SPRINT_EVIDENCE.md).
+
+The private CI started two actual Docker containers; the host loopback API successfully requested ledger data using service DNS. Full independent learner fork testing remains open.

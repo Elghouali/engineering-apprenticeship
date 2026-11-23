@@ -46,3 +46,10 @@ Explain Ready vs Running, startup/readiness/liveness probes, how Services select
 **Status:** prototype; independent public learner workflow and production resilience remain outstanding.
 
 Official docs: https://kubernetes.io/docs/concepts/workloads/controllers/deployment/ and https://kubernetes.io/docs/tasks/configure-pod-container/configure-liveness-readiness-startup-probes/
+
+
+## Maintainer validation evidence
+
+The public contract has a correct implementation in a separate private repository and passes Linux/Windows tests. See [Cloud sprint evidence](../../docs/CLOUD_SPRINT_EVIDENCE.md).
+
+The private CI created a disposable kind Kubernetes cluster, reached the two Ready pods through a Service, introduced a bad image rollout, and rolled back to a healthy state. This is a local cluster, not verified multi-AZ resilience.

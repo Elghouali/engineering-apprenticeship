@@ -43,6 +43,8 @@ GitHub itself is the classroom: Issues are work requests, branches are experimen
 
 Advanced missions include **maintainer-verified real local PySpark aggregation** (DATA-004) and **a real local Kafka broker crash/replay smoke test** (DATA-005), plus a validated Airflow Task SDK DAG structure (DATA-006). A measured Spark comparison and a controlled **real Airflow scheduler-managed historical backfill** have now passed maintainer CI. These validate a local synthetic environment, not production scalability or a public learner rollout. These are still prototypes pending wider public learner acceptance testing.
 
+**Cloud engineering integration evidence:** [CLOUD-003 through CLOUD-006](docs/CLOUD_SPRINT_EVIDENCE.md) have passed confidential reference tests. Maintainer CI has run real Docker service DNS, generated a real provider-free Terraform plan, and used a disposable Kubernetes kind cluster for readiness, failed rollout and rollback. The S3 policy mission is checked structurally only, without an AWS authorization test.
+
 These starter missions are part of the academy **under construction**. The full progression from foundations through Spark, Kafka, Cloud and capstone delivery has not yet been completed or integration-verified.
 
 ## Runnable end-to-end reference system
