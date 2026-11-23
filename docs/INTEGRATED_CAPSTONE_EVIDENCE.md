@@ -12,10 +12,12 @@
 | Kafka 4.4 KRaft + PostgreSQL 16 | Real broker delivery, PostgreSQL event/inbox uniqueness, forced crash after DB commit before Kafka ack, safe replay of offset | One broker/consumer group; no cross-system distributed transaction |
 | S3-compatible artifact | SeaweedFS MinIO-compatible API stores deterministic Gold bytes, replay does not alter them; read-back compared to live SQL | Single writer, no conditional multiwriter publication or provider IAM |
 | Reporting API | Real HTTP 200 on loopback for verified financial report, 503 intended when state is untrusted | No public ingress/TLS/auth |
-| PySpark 4.0.3 + Java 17 | Real local Spark transform over PostgreSQL-derived bounded snapshot; checks merchant financial parity and S3 publish `created` then `replayed` | Max 1,000 driver-collected records; not scalable JDBC/CDC/Parquet |
+| PySpark 4.0.3 + Java 17 | Real four-way partitioned PostgreSQL JDBC reads (no raw event collect); SQL parity and S3 `created`/`replayed` for 5 and **2,403** distinct synthetic rows | Local single driver; multi-worker scalability, consistent cross-connection snapshots and multi-run benchmark not established |
 | Airflow 3 Task SDK DAG | Real container executing `seed_kafka`, `persist_postgres`, `publish_s3_gold`, `verify_lineage`. DagRun marked success and returned accepted_events=5, revenue=22,000, verified=true | Manual `airflow dags test` only; no scheduler-managed integrated multi-day backfill |
 
-Actual Spark CI logged `spark_version=4.0.3` and the S3 key `gold-spark/2026-11-20/revenue.json`. The first run reported `publish_status=created` and the second `publish_status=replayed`, both with paid revenue of **22,000 cents**.
+The original integrated Spark CI logged `spark_version=4.0.3` and the S3 key `gold-spark/2026-11-20/revenue.json`. The first run reported `publish_status=created` and the second `publish_status=replayed`, both with paid revenue of **22,000 cents**.
+
+**New JDBC validation — [GitHub Actions run 45238994332](https://github.com/Elghouali/engineering-apprenticeship/actions/runs/45238994332) (November 23, 2026):** all five integrated CI jobs passed. Spark job logs record `spark_version=4.0.3`, `jdbc_partitions=4`, the formatted Spark physical plan and SQL parity. The original date has 5 events and 22,000 cents; a separate synthetic date contains **2,403 durable PostgreSQL events**, above the old hard 1,000-row limit. Both dates produced an S3 artifact with source lineage and then returned `publish_status=replayed` without overwriting the identical artifact. The scaled fixture is inserted directly into the same disposable durable ledger and is **not** a 2,403-message Kafka throughput test.
 
 The initial end-to-end Kafka CI failed because the default KRaft broker advertised a name that sibling containers could not reach. The verified version explicitly advertises `PLAINTEXT://kafka:9092` inside the Compose bridge. This is a real networking investigation, now reflected in the runbook.
 
@@ -43,7 +45,8 @@ The integrated [capstone README](../capstones/atlas-retail-integrated/README.md)
 
 ## Next acceptance gates
 
-- [ ] Replace driver-loaded Spark snapshot with scalable ingestion and demonstrate larger workloads/real performance trade-offs.
+- [x] Replace the max-1,000 driver-collected Spark snapshot with partitioned JDBC reads and verify an input larger than 1,000 events in real integration CI.
+- [ ] Independently demonstrate performance trade-offs and skew on multiple much larger workloads, plus safe consistent snapshots, distributed workers and failure recovery.
 - [ ] Schedule and backfill multiple *independent* business dates with the integrated Airflow DAG, preserving immutable reports and recovery.
 - [ ] Deploy the **integrated** API in a disposable Kubernetes cluster with real service dependency connectivity and rollback; the standalone CLOUD-006 kind test does not count for this.
 - [ ] Add monitoring, audit/recovery metrics, secret isolation and stronger object-store conditional write policy.
