@@ -65,20 +65,52 @@ class PlatformTests(unittest.TestCase):
         self.assertEqual(p.returncode, 0, p.stderr)
         self.assertIn("retail-001", p.stdout)
 
-    def test_deliberate_starter_fails_grader(self):
-        """Guard against accidentally shipping a pre-solved first mission."""
+    def test_mission_prerequisites_exist(self):
+        items = json.loads(CATALOG.read_text(encoding="utf-8"))["missions"]
+        by_id = {m["id"]: m for m in items}
+        self.assertEqual(len(by_id), len(items))
+        for mission in items:
+            for prerequisite in mission.get("prerequisites", []):
+                self.assertIn(prerequisite, by_id)
+
+    def test_start_copies_but_never_overwrites_submission(self):
+        import tempfile
+        from tools import apprentice
+        with tempfile.TemporaryDirectory() as d:
+            root = Path(d)
+            for mission in apprentice.missions():
+                source = root / mission["starter"]
+                source.parent.mkdir(parents=True, exist_ok=True)
+                source.write_text("starter for " + mission["id"], encoding="utf-8")
+                target = apprentice.start(mission["id"], root=root, enforce_branch=False)
+                self.assertTrue(target.is_file())
+                self.assertEqual(target.read_text(), source.read_text())
+                with self.assertRaises(FileExistsError):
+                    apprentice.start(mission["id"], root=root, enforce_branch=False)
+
+    def test_start_refuses_untrusted_parent_directory(self):
+        import tempfile
+        from tools import apprentice
+        with tempfile.TemporaryDirectory() as d:
+            with self.assertRaises(ValueError):
+                apprentice.path_under(Path(d), "../secret.py")
+
+    def test_all_starters_are_intentionally_broken(self):
+        """All published starter missions should fail the full contract."""
         import os
-        env = os.environ.copy()
-        env["APPRENTICE_SUBMISSION_PATH"] = str(
-            ROOT / "missions" / "retail-001" / "starter" / "pipeline.py"
-        )
-        p = subprocess.run(
-            [sys.executable, "-m", "unittest", "discover", "-s",
-             "missions/retail-001/tests", "-v"],
-            cwd=ROOT, env=env, capture_output=True, text=True, check=False
-        )
-        self.assertNotEqual(p.returncode, 0)
-        self.assertIn("FAILED", p.stderr)
+        for mission in json.loads(CATALOG.read_text())["missions"]:
+            with self.subTest(mission=mission["id"]):
+                env = os.environ.copy()
+                env["APPRENTICE_SUBMISSION_PATH"] = str(ROOT / mission["starter"])
+                result = subprocess.run(
+                    [sys.executable, "-m", "unittest", "discover", "-s",
+                     mission["grader"], "-v"],
+                    cwd=ROOT, env=env,
+                    capture_output=True, text=True, check=False,
+                    timeout=10
+                )
+                self.assertNotEqual(result.returncode, 0)
+                self.assertIn("FAILED", result.stderr)
 
 
 if __name__ == "__main__":

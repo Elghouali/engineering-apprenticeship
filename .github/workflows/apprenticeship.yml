@@ -41,8 +41,4 @@ jobs:
           python-version: "3.11"
       - name: Check learner submission (when present)
         run: |
-          if [ -f submissions/retail-001/pipeline.py ]; then
-            python tools/apprentice.py check retail-001
-          else
-            echo "No learner submission in this branch; mission remains ready."
-          fi
+          python tools/apprentice.py check-all

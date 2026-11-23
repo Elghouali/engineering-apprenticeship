@@ -49,32 +49,21 @@ The synthetic [orders CSV](data/orders.csv) contains eight lines of data. Expect
 
 A green test suite is only a starting point. You must also be able to explain the incident and defend your decisions.
 
-## GitHub workflow — your task
+## GitHub workflow — public learner's own fork
 
-From repo root:
+When the academy officially launches, follow the [Public Learner Guide](../../docs/LEARNER_GUIDE.md) to fork this repository, clone **your fork**, and create your own branch. Do not commit your solution to the shared upstream repository.
 
 ~~~bash
 git switch -c mission/retail-001
-mkdir -p submissions/retail-001
-cp missions/retail-001/starter/pipeline.py submissions/retail-001/pipeline.py
+python tools/apprentice.py start retail-001
 python tools/apprentice.py check retail-001
 ~~~
 
-On Windows PowerShell, use `New-Item -ItemType Directory -Force submissions/retail-001` and `Copy-Item missions/retail-001/starter/pipeline.py submissions/retail-001/pipeline.py` instead of mkdir/cp if needed.
+The CLI creates the submission file from the deliberately faulty starter, and refuses to overwrite an existing file. Initial test failures are **expected**.
 
-**The starter has deliberate bugs. The first test run should fail.**
+Make a correct implementation only in submissions/retail-001/pipeline.py. Keep the original starter and contract tests unchanged. Run checks again, commit and push your mission branch to your fork.
 
-Understand the failing tests and implement a correct version under `submissions/retail-001/pipeline.py`. Keep the original starter and grader unchanged.
-
-Then:
-
-~~~bash
-git add submissions/retail-001/pipeline.py
-git commit -m "fix(retail-001): validate and deduplicate daily orders"
-git push -u origin mission/retail-001
-~~~
-
-Open a PR to `main`, link the mission issue, wait for CI, explain root cause, and request review.
+Open a PR with **your own fork as the base repository** (base main, compare mission branch). Describe the root cause and your actual test output. Link the upstream issue as a reference.
 
 ## Required engineering evidence
 
