@@ -1,0 +1,159 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "id": "git-basics",
+      "prerequisites": [],
+      "description": "Clone, status, add, commit and push"
+    },
+    {
+      "id": "git-branches",
+      "prerequisites": [
+        "git-basics"
+      ],
+      "description": "Branch, PR, review, merge and rebase"
+    },
+    {
+      "id": "python-data",
+      "prerequisites": [],
+      "description": "CSV, typed values, exceptions and functions"
+    },
+    {
+      "id": "data-quality",
+      "prerequisites": [
+        "python-data"
+      ],
+      "description": "Data contracts, validation and rejects"
+    },
+    {
+      "id": "testing",
+      "prerequisites": [
+        "python-data"
+      ],
+      "description": "Reproducible unit tests and regression checks"
+    },
+    {
+      "id": "data-idempotency",
+      "prerequisites": [
+        "data-quality",
+        "testing"
+      ],
+      "description": "Deduplication, retries and business keys"
+    },
+    {
+      "id": "sql-transactions",
+      "prerequisites": [
+        "data-idempotency"
+      ],
+      "description": "ACID, uniqueness, rollback and isolation"
+    },
+    {
+      "id": "distributed-systems",
+      "prerequisites": [
+        "sql-transactions"
+      ],
+      "description": "Failures, partitions, consistency and ordering"
+    },
+    {
+      "id": "kafka",
+      "prerequisites": [
+        "distributed-systems"
+      ],
+      "description": "Logs, offsets, partitions and replay"
+    },
+    {
+      "id": "cloud-networking",
+      "prerequisites": [
+        "git-basics"
+      ],
+      "description": "DNS, TCP, subnet routes and service access"
+    },
+    {
+      "id": "data-observability",
+      "prerequisites": [
+        "data-quality",
+        "testing"
+      ],
+      "description": "Freshness, watermarks, data SLIs and on-call response"
+    },
+    {
+      "id": "checksums",
+      "prerequisites": [
+        "python-data"
+      ],
+      "description": "Content-addressing and integrity verification"
+    },
+    {
+      "id": "object-storage",
+      "prerequisites": [
+        "cloud-networking",
+        "checksums"
+      ],
+      "description": "Safe object keys, immutability, ETags and access controls"
+    },
+    {
+      "id": "spark-skew",
+      "prerequisites": [
+        "distributed-systems",
+        "data-quality"
+      ],
+      "description": "Shuffle planning, skew analysis, key salting and exact aggregations"
+    },
+    {
+      "id": "stream-replay",
+      "prerequisites": [
+        "data-idempotency",
+        "sql-transactions"
+      ],
+      "description": "Crash after durable commit, reprocessing, and broker acknowledgement boundaries"
+    },
+    {
+      "id": "batch-backfills",
+      "prerequisites": [
+        "data-quality",
+        "data-observability"
+      ],
+      "description": "Business-date partitions, retries, idempotent publication and recovery"
+    },
+    {
+      "id": "airflow-orchestration",
+      "prerequisites": [
+        "batch-backfills",
+        "testing"
+      ],
+      "description": "DAG task dependencies, retry semantics, catchup and scheduling"
+    },
+    {
+      "id": "container-networking",
+      "prerequisites": [
+        "cloud-networking",
+        "testing"
+      ],
+      "description": "Container namespaces, Docker DNS, bridge networks, port exposure, readiness and failure isolation"
+    },
+    {
+      "id": "terraform-plan",
+      "prerequisites": [
+        "cloud-networking",
+        "testing"
+      ],
+      "description": "Terraform plan JSON, drift, replacements, destructive-action approval and safe infrastructure review"
+    },
+    {
+      "id": "iam-least-privilege",
+      "prerequisites": [
+        "object-storage",
+        "terraform-plan"
+      ],
+      "description": "Identity and resource policy scope, S3 ARN patterns and prefix-restricted permissions"
+    },
+    {
+      "id": "kubernetes-rollout",
+      "prerequisites": [
+        "container-networking",
+        "testing"
+      ],
+      "description": "Pod readiness vs liveness, Service selectors, resources, rolling-update availability, failure recovery"
+    }
+  ]
+}

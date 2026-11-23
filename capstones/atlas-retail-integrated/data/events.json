@@ -1,0 +1,51 @@
+[
+  {
+    "event_id": "evt-100",
+    "merchant_id": "merchant-a",
+    "business_date": "2026-11-20",
+    "amount_cents": 10000,
+    "status": "paid"
+  },
+  {
+    "event_id": "evt-100",
+    "merchant_id": "merchant-a",
+    "business_date": "2026-11-20",
+    "amount_cents": 10000,
+    "status": "paid"
+  },
+  {
+    "event_id": "evt-101",
+    "merchant_id": "merchant-a",
+    "business_date": "2026-11-20",
+    "amount_cents": 2000,
+    "status": "paid"
+  },
+  {
+    "event_id": "evt-102",
+    "merchant_id": "merchant-b",
+    "business_date": "2026-11-20",
+    "amount_cents": 5000,
+    "status": "cancelled"
+  },
+  {
+    "event_id": "evt-103",
+    "merchant_id": "merchant-b",
+    "business_date": "2026-11-20",
+    "amount_cents": 7500,
+    "status": "paid"
+  },
+  {
+    "event_id": "evt-104",
+    "merchant_id": "merchant-c",
+    "business_date": "2026-11-20",
+    "amount_cents": 2500,
+    "status": "paid"
+  },
+  {
+    "event_id": "evt-104",
+    "merchant_id": "merchant-c",
+    "business_date": "2026-11-20",
+    "amount_cents": 2500,
+    "status": "paid"
+  }
+]

@@ -1,0 +1,10 @@
+FROM apache/airflow:3.1.8
+ENV PYTHONDONTWRITEBYTECODE=1 PYTHONUNBUFFERED=1
+WORKDIR /opt/airflow/atlas
+COPY --chown=airflow:0 requirements.txt ./requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt
+COPY --chown=airflow:0 logic.py storage.py app.py ./
+COPY --chown=airflow:0 data/events.json ./data/events.json
+COPY --chown=airflow:0 airflow/dags/atlas_integrated.py /opt/airflow/dags/atlas_integrated.py
+ENV PYTHONPATH=/opt/airflow/atlas
+USER airflow

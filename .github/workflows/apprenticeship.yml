@@ -1,0 +1,100 @@
+name: GitHub-Native Engineering Apprenticeship
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+      - "mission/**"
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+concurrency:
+  group: apprenticeship-${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  platform-integrity:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate mission contracts, dependencies and CLI
+        run: python -m unittest discover -s tests -v
+      - name: Verify real end-to-end data product and failure recovery
+        run: python -m unittest discover -s capstones/atlas-retail-platform/tests -v
+      - name: Check new integrated capstone pure business contracts
+        run: python -m unittest discover -s capstones/atlas-retail-integrated/tests -v
+      - name: Check all internal documentation references
+        run: python tools/verify_links.py
+      - name: Show available assignments
+        run: python tools/apprentice.py list
+
+  submitted-missions:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check learner submission (when present)
+        run: |
+          python tools/apprentice.py check-all
+  
+  compose-syntax:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate learner-facing Airflow Docker Compose contract
+        run: docker compose -f missions/data-006/docker-compose.yml config --quiet
+      - name: Validate local Kafka broker Docker Compose contract
+        run: docker compose -f missions/data-005/docker-compose.yml config --quiet
+      - name: Validate integrated Kafka/Postgres/S3 local Compose contract
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml config --quiet
+
+  integrated-stack-runtime:
+    # Only trusted maintainer pushes run this container integration. No PR secrets.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate integrated Compose
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml config --quiet
+      - name: Real Kafka-Postgres-S3-HTTP crash/replay integration
+        run: bash capstones/atlas-retail-integrated/ci/smoke.sh
+      - name: Failure diagnostics from disposable containers
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose ps || true
+          docker compose logs --tail=100 || true
+      - name: Always delete synthetic test volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile tools --profile api down -v --remove-orphans || true

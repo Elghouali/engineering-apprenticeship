@@ -1,0 +1,9 @@
+order_id,customer_id,quantity,unit_price,status
+1001,C001,2,60.00,paid
+1002,C002,1,50.00,paid
+1001,C001,2,60.00,paid
+1003,C003,1,100.00,cancelled
+1004,C004,-1,30.00,paid
+1002,C002,1,99.00,paid
+1005,C005,2,25.00,paid
+1006,,1,80.00,paid

@@ -1,0 +1,119 @@
+# Disposable educational lab. No production secrets or cloud accounts.
+# Only the reporting API binds a port, and only to host loopback.
+x-atlas-env: &atlas-env
+  ATLAS_PG_DSN: postgresql://atlas:atlas_local_demo_only@postgres:5432/atlas_retail
+  ATLAS_KAFKA: kafka:9092
+  ATLAS_S3_ENDPOINT: http://objectstore:9000
+  ATLAS_S3_ACCESS: atlas_demo
+  ATLAS_S3_SECRET: atlas_synthetic_only_2026
+  ATLAS_S3_BUCKET: atlas-reporting-demo
+  ATLAS_TOPIC: atlas-payment-events
+  ATLAS_DATE: "2026-11-20"
+  ATLAS_SPARK_JDBC_PARTITIONS: "4"
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: atlas
+      POSTGRES_PASSWORD: atlas_local_demo_only
+      POSTGRES_DB: atlas_retail
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U atlas -d atlas_retail"]
+      interval: 3s
+      timeout: 3s
+      retries: 25
+    networks: [platform]
+  kafka:
+    image: apache/kafka:4.4.0
+    hostname: kafka
+    environment:
+      # Official KRaft pattern adapted to an internal-only single listener.
+      # Kafka clients in Compose must receive kafka:9092 in broker metadata.
+      KAFKA_NODE_ID: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: CONTROLLER:PLAINTEXT,PLAINTEXT:PLAINTEXT
+      KAFKA_LISTENERS: CONTROLLER://:9093,PLAINTEXT://:9092
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_SHARE_COORDINATOR_STATE_TOPIC_MIN_ISR: 1
+      KAFKA_LOG_DIRS: /tmp/kraft-combined-logs
+      CLUSTER_ID: 4L6g3nShT-eMCtK--X86sw
+    networks: [platform]
+  objectstore:
+    # MinIO community images are no longer reliably available in 2026.
+    # Official SeaweedFS compatibility shim; use a new, dedicated volume.
+    image: ghcr.io/seaweedfs/minio-compat:latest
+    command: ["server", "/data", "--console-address", ":9001"]
+    environment:
+      MINIO_ROOT_USER: atlas_demo
+      MINIO_ROOT_PASSWORD: atlas_synthetic_only_2026
+    volumes:
+      - s3_data:/data
+    networks: [platform]
+  runner:
+    build: .
+    image: atlas-retail-integrated:dev
+    profiles: [tools]
+    environment: *atlas-env
+    depends_on:
+      postgres: {condition: service_healthy}
+      kafka: {condition: service_started}
+      objectstore: {condition: service_started}
+    networks: [platform]
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    image: atlas-retail-integrated-airflow:dev
+    profiles: [airflow]
+    environment:
+      <<: *atlas-env
+      AIRFLOW_HOME: /tmp/atlas-airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+    depends_on:
+      postgres: {condition: service_healthy}
+      kafka: {condition: service_started}
+      objectstore: {condition: service_started}
+    networks: [platform]
+  spark:
+    build:
+      context: .
+      dockerfile: Dockerfile.spark
+    image: atlas-retail-integrated-spark:dev
+    profiles: [spark]
+    environment: *atlas-env
+    depends_on:
+      postgres: {condition: service_healthy}
+      objectstore: {condition: service_started}
+    networks: [platform]
+  api:
+    build: .
+    image: atlas-retail-integrated:dev
+    profiles: [api]
+    command: ["serve"]
+    environment: *atlas-env
+    depends_on:
+      postgres: {condition: service_healthy}
+      objectstore: {condition: service_started}
+    ports:
+      - "127.0.0.1:18083:8080"
+    networks: [platform]
+
+networks:
+  platform:
+    driver: bridge
+volumes:
+  pg_data:
+  s3_data:

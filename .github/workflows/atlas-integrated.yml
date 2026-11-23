@@ -1,0 +1,144 @@
+name: Integrated Atlas Retail - Real Local Platform
+
+on:
+  push:
+    branches:
+      - main
+      - "feat/**"
+    paths:
+      - "capstones/atlas-retail-integrated/**"
+      - ".github/workflows/atlas-integrated.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: integrated-atlas-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  unit-contracts:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Check pure data and retry invariants
+        run: python -m unittest discover -s capstones/atlas-retail-integrated/tests -v
+
+  real-stack:
+    # Never run unknown external PR source in this Docker/network integration job.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate local Compose architecture
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml config --quiet
+      - name: Actual Kafka, PostgreSQL, object store, HTTP and crash/replay smoke
+        run: bash capstones/atlas-retail-integrated/ci/smoke.sh
+      - name: Diagnostic container state on failure
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose ps || true
+          docker compose logs --tail=90 || true
+      - name: Always destroy disposable integration volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile tools --profile api down -v --remove-orphans || true
+  
+  spark-postgres-objectstore:
+    # Trusted maintainer pushes only. CI never processes third-party PR Dockerfiles.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate Spark Compose wiring before launch
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml --profile spark config --quiet
+      - name: Real partitioned PySpark JDBC read over PostgreSQL with >1000 rows and S3 replay
+        run: bash capstones/atlas-retail-integrated/ci/spark.sh
+      - name: Inspect container state on failure
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile spark ps || true
+          docker compose --profile spark logs --tail=70 || true
+      - name: Delete all disposable Spark integration volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile tools --profile spark --profile api down -v --remove-orphans || true
+  
+  airflow-integrated-dag:
+    # The local multi-container execution is a maintainer-only smoke job.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Compose configuration
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml --profile airflow config --quiet
+      - name: Airflow 3 Task SDK actually runs shared integrated platform
+        run: bash capstones/atlas-retail-integrated/ci/airflow.sh
+      - name: Inspect fault context
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile airflow ps || true
+          docker compose --profile airflow logs --tail=100 || true
+      - name: Always tear down synthetic containers and volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile airflow --profile tools --profile api down -v --remove-orphans || true
+
+  airflow-scheduler-backfill:
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 34
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Execute two bounded scheduler-managed Airflow historical dates
+        run: bash capstones/atlas-retail-integrated/ci/airflow_scheduler.sh
+
+  kubernetes-integrated-api:
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 27
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23'
+          cache: false
+      - name: Install Kind
+        run: |
+          go install sigs.k8s.io/kind@v0.27.0
+          echo "$(go env GOPATH)/bin" >> "$GITHUB_PATH"
+      - name: Run isolated Kubernetes service and broken rollout recovery
+        run: bash capstones/atlas-retail-integrated/ci/kind.sh

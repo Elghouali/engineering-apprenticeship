@@ -1,0 +1,187 @@
+# SYNTHETIC, DISPOSABLE TRAINING-ONLY CLUSTER. Do not reuse these demo secrets.
+# No Ingress, LoadBalancer or host port. EmptyDir data must never hold real records.
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: atlas-lab
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: atlas-demo-credentials
+  namespace: atlas-lab
+type: Opaque
+stringData:
+  pg-dsn: postgresql://atlas:atlas_local_demo_only@postgres:5432/atlas_retail
+  pg-password: atlas_local_demo_only
+  s3-access: atlas_demo
+  s3-secret: atlas_synthetic_only_2026
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: atlas-app-config
+  namespace: atlas-lab
+data:
+  ATLAS_S3_ENDPOINT: http://objectstore:9000
+  ATLAS_S3_BUCKET: atlas-reporting-demo
+  ATLAS_DATE: "2026-11-20"
+  ATLAS_KAFKA: kafka:9092
+  ATLAS_TOPIC: atlas-payment-events
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: atlas-lab
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: postgres}
+  template:
+    metadata:
+      labels: {app: postgres}
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:16-alpine
+          ports: [{containerPort: 5432}]
+          env:
+            - {name: POSTGRES_USER, value: atlas}
+            - {name: POSTGRES_DB, value: atlas_retail}
+            - name: POSTGRES_PASSWORD
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: pg-password}}
+          volumeMounts: [{name: data, mountPath: /var/lib/postgresql/data}]
+          readinessProbe:
+            exec: {command: [sh, -c, "pg_isready -U atlas -d atlas_retail"]}
+            periodSeconds: 3
+      volumes: [{name: data, emptyDir: {}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: postgres, namespace: atlas-lab}
+spec:
+  type: ClusterIP
+  selector: {app: postgres}
+  ports: [{port: 5432, targetPort: 5432}]
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: objectstore, namespace: atlas-lab}
+spec:
+  replicas: 1
+  selector:
+    matchLabels: {app: objectstore}
+  template:
+    metadata:
+      labels: {app: objectstore}
+    spec:
+      containers:
+        - name: objectstore
+          image: ghcr.io/seaweedfs/minio-compat:latest
+          args: [server, /data, --console-address, ":9001"]
+          ports: [{containerPort: 9000}]
+          env:
+            - name: MINIO_ROOT_USER
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: s3-access}}
+            - name: MINIO_ROOT_PASSWORD
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: s3-secret}}
+          volumeMounts: [{name: data, mountPath: /data}]
+          readinessProbe:
+            tcpSocket: {port: 9000}
+            periodSeconds: 3
+      volumes: [{name: data, emptyDir: {}}]
+---
+apiVersion: v1
+kind: Service
+metadata: {name: objectstore, namespace: atlas-lab}
+spec:
+  type: ClusterIP
+  selector: {app: objectstore}
+  ports: [{port: 9000, targetPort: 9000}]
+---
+apiVersion: batch/v1
+kind: Job
+metadata: {name: atlas-seed, namespace: atlas-lab}
+spec:
+  backoffLimit: 3
+  template:
+    spec:
+      restartPolicy: OnFailure
+      containers:
+        - name: synthetic-seed
+          image: atlas-retail-integrated:dev
+          imagePullPolicy: Never
+          command: [python, /app/k8s_seed.py]
+          envFrom: [{configMapRef: {name: atlas-app-config}}]
+          env:
+            - name: ATLAS_PG_DSN
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: pg-dsn}}
+            - name: ATLAS_S3_ACCESS
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: s3-access}}
+            - name: ATLAS_S3_SECRET
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: s3-secret}}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 11001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+            seccompProfile: {type: RuntimeDefault}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: atlas-api, namespace: atlas-lab}
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  strategy:
+    type: RollingUpdate
+    rollingUpdate: {maxUnavailable: 0, maxSurge: 1}
+  selector:
+    matchLabels: {app: atlas-api}
+  template:
+    metadata:
+      labels: {app: atlas-api}
+    spec:
+      automountServiceAccountToken: false
+      containers:
+        - name: api
+          image: atlas-retail-integrated:dev
+          imagePullPolicy: Never
+          args: [serve]
+          ports: [{containerPort: 8080}]
+          envFrom: [{configMapRef: {name: atlas-app-config}}]
+          env:
+            - name: ATLAS_PG_DSN
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: pg-dsn}}
+            - name: ATLAS_S3_ACCESS
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: s3-access}}
+            - name: ATLAS_S3_SECRET
+              valueFrom: {secretKeyRef: {name: atlas-demo-credentials, key: s3-secret}}
+          readinessProbe:
+            httpGet: {path: /health, port: 8080}
+            periodSeconds: 5
+            failureThreshold: 2
+          livenessProbe:
+            httpGet: {path: /live, port: 8080}
+            initialDelaySeconds: 2
+            periodSeconds: 10
+          resources:
+            requests: {cpu: 50m, memory: 64Mi}
+            limits: {cpu: 500m, memory: 256Mi}
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 11001
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+            seccompProfile: {type: RuntimeDefault}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: atlas-api, namespace: atlas-lab}
+spec:
+  type: ClusterIP
+  selector: {app: atlas-api}
+  ports: [{port: 8080, targetPort: 8080}]

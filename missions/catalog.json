@@ -1,0 +1,321 @@
+{
+  "schema_version": 1,
+  "missions": [
+    {
+      "id": "retail-001",
+      "name": "Incorrect revenue after ETL retry",
+      "company": "atlas-retail",
+      "level": "trainee",
+      "status": "prototype",
+      "path": "missions/retail-001",
+      "starter": "missions/retail-001/starter/pipeline.py",
+      "submission": "submissions/retail-001/pipeline.py",
+      "grader": "missions/retail-001/tests",
+      "prerequisites": [],
+      "skills": [
+        "git-branches",
+        "python-data",
+        "data-quality",
+        "testing",
+        "data-idempotency"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "retail-002",
+      "name": "Payment idempotency after API timeout",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/retail-002",
+      "starter": "missions/retail-002/starter/payment.py",
+      "submission": "submissions/retail-002/payment.py",
+      "grader": "missions/retail-002/tests",
+      "prerequisites": [
+        "retail-001"
+      ],
+      "skills": [
+        "sql-transactions",
+        "testing",
+        "data-idempotency"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-001",
+      "name": "Reporting API outage and safe GET retries",
+      "company": "atlas-retail",
+      "level": "trainee",
+      "status": "prototype",
+      "path": "missions/cloud-001",
+      "starter": "missions/cloud-001/starter/client.py",
+      "submission": "submissions/cloud-001/client.py",
+      "grader": "missions/cloud-001/tests",
+      "prerequisites": [],
+      "skills": [
+        "git-branches",
+        "cloud-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "retail-003",
+      "name": "Pipeline green, source data stale",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/retail-003",
+      "starter": "missions/retail-003/starter/monitor.py",
+      "submission": "submissions/retail-003/monitor.py",
+      "grader": "missions/retail-003/tests",
+      "prerequisites": [
+        "retail-001",
+        "retail-002"
+      ],
+      "skills": [
+        "data-observability",
+        "testing",
+        "data-quality"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-002",
+      "name": "Published report overwritten without integrity check",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/cloud-002",
+      "starter": "missions/cloud-002/starter/storage.py",
+      "submission": "submissions/cloud-002/storage.py",
+      "grader": "missions/cloud-002/tests",
+      "prerequisites": [
+        "cloud-001"
+      ],
+      "skills": [
+        "object-storage",
+        "checksums",
+        "cloud-networking"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "data-004",
+      "name": "Spark groupBy skew and replay-safe paid revenue",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/data-004",
+      "starter": "missions/data-004/starter/spark_job.py",
+      "submission": "submissions/data-004/spark_job.py",
+      "grader": "missions/data-004/tests",
+      "prerequisites": [
+        "retail-003"
+      ],
+      "skills": [
+        "spark-skew",
+        "distributed-systems",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "data-005",
+      "name": "Kafka delivery replay and durable SQLite inbox",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/data-005",
+      "starter": "missions/data-005/starter/inbox.py",
+      "submission": "submissions/data-005/inbox.py",
+      "grader": "missions/data-005/tests",
+      "prerequisites": [
+        "retail-002"
+      ],
+      "skills": [
+        "stream-replay",
+        "kafka",
+        "sql-transactions"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "data-006",
+      "name": "Airflow retry-safe daily publishing and historical backfill",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/data-006",
+      "starter": "missions/data-006/starter/orchestrator.py",
+      "submission": "submissions/data-006/orchestrator.py",
+      "grader": "missions/data-006/tests",
+      "prerequisites": [
+        "retail-003",
+        "data-004",
+        "data-005"
+      ],
+      "skills": [
+        "airflow-orchestration",
+        "batch-backfills",
+        "data-observability"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-003",
+      "name": "Docker API cannot resolve private ledger service",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/cloud-003",
+      "starter": "missions/cloud-003/starter/network.py",
+      "submission": "submissions/cloud-003/network.py",
+      "grader": "missions/cloud-003/tests",
+      "prerequisites": [
+        "cloud-001"
+      ],
+      "skills": [
+        "container-networking",
+        "cloud-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-004",
+      "name": "Terraform plan destructive change and unmanaged drift",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/cloud-004",
+      "starter": "missions/cloud-004/starter/plan_guard.py",
+      "submission": "submissions/cloud-004/plan_guard.py",
+      "grader": "missions/cloud-004/tests",
+      "prerequisites": [
+        "cloud-002",
+        "cloud-003"
+      ],
+      "skills": [
+        "terraform-plan",
+        "cloud-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-005",
+      "name": "Least-privilege IAM permissions for S3 reports",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/cloud-005",
+      "starter": "missions/cloud-005/starter/policy.py",
+      "submission": "submissions/cloud-005/policy.py",
+      "grader": "missions/cloud-005/tests",
+      "prerequisites": [
+        "cloud-002",
+        "cloud-004"
+      ],
+      "skills": [
+        "iam-least-privilege",
+        "object-storage",
+        "terraform-plan"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-006",
+      "name": "Kubernetes Deployment remains unready after rollout",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/cloud-006",
+      "starter": "missions/cloud-006/starter/k8s.py",
+      "submission": "submissions/cloud-006/k8s.py",
+      "grader": "missions/cloud-006/tests",
+      "prerequisites": [
+        "cloud-003",
+        "cloud-004"
+      ],
+      "skills": [
+        "kubernetes-rollout",
+        "container-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    }
+  ]
+}
