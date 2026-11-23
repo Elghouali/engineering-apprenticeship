@@ -6,6 +6,7 @@ from __future__ import annotations
 
 import argparse
 from contextlib import closing
+from datetime import date
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 import os
@@ -14,6 +15,26 @@ import sys
 import time
 
 from logic import validate_event
+
+
+def events_for_date(business_date: str) -> list[dict]:
+    """Deterministic synthetic replay fixture for an Airflow logical business date."""
+    try:
+        if type(business_date) is not str or date.fromisoformat(business_date).isoformat() != business_date:
+            raise ValueError("invalid_business_date")
+    except (TypeError, ValueError) as exc:
+        raise ValueError("invalid_business_date") from exc
+    raw = json.loads(EVENTS.read_text(encoding="utf-8"))
+    base_date = raw[0]["business_date"]
+    normalized = []
+    for event in raw:
+        item = dict(event)
+        item["business_date"] = business_date
+        if business_date != base_date:
+            item["event_id"] = f"{item['event_id']}-{business_date}"
+        normalized.append(validate_event(item))
+    return normalized
+
 from storage import (open_postgres, prepare_db, store_message, load_events,
                      s3_client, publish_report, verify_report)
 
@@ -51,14 +72,13 @@ def topic_admin():
     ))
 
 
-def seed() -> dict:
+def seed(business_date: str | None = None) -> dict:
     from kafka import KafkaProducer
     from kafka.admin import NewTopic
     from kafka.errors import TopicAlreadyExistsError
 
-    events = json.loads(EVENTS.read_text(encoding="utf-8"))
-    for item in events:
-        validate_event(item)
+    business_date = business_date or os.environ["ATLAS_DATE"]
+    events = events_for_date(business_date)
     topic = os.environ["ATLAS_TOPIC"]
     admin = topic_admin()
     try:
@@ -83,7 +103,7 @@ def seed() -> dict:
         producer.flush(timeout=20)
     finally:
         producer.close()
-    return {"published_messages": len(events), "topic": topic}
+    return {"published_messages": len(events), "topic": topic, "business_date": business_date}
 
 
 def consume(max_messages: int, fail_after_event: str | None = None) -> dict:
@@ -133,16 +153,16 @@ def consume(max_messages: int, fail_after_event: str | None = None) -> dict:
             consumer.close()
 
 
-def publish() -> dict:
+def publish(business_date: str | None = None) -> dict:
     with closing(connect_db()) as conn:
         prepare_db(conn)
-        return publish_report(conn, connect_s3(), os.environ["ATLAS_DATE"])
+        return publish_report(conn, connect_s3(), business_date or os.environ["ATLAS_DATE"])
 
 
-def verify() -> dict:
+def verify(business_date: str | None = None) -> dict:
     with closing(connect_db()) as conn:
         prepare_db(conn)
-        return verify_report(conn, connect_s3(), os.environ["ATLAS_DATE"])
+        return verify_report(conn, connect_s3(), business_date or os.environ["ATLAS_DATE"])
 
 
 def demo() -> dict:
