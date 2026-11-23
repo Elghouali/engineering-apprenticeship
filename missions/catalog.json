@@ -11,12 +11,61 @@
       "starter": "missions/retail-001/starter/pipeline.py",
       "submission": "submissions/retail-001/pipeline.py",
       "grader": "missions/retail-001/tests",
+      "prerequisites": [],
       "skills": [
         "git-branches",
         "python-data",
         "data-quality",
         "testing",
         "data-idempotency"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ]
+    },
+    {
+      "id": "retail-002",
+      "name": "Payment idempotency after API timeout",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "ready",
+      "path": "missions/retail-002",
+      "starter": "missions/retail-002/starter/payment.py",
+      "submission": "submissions/retail-002/payment.py",
+      "grader": "missions/retail-002/tests",
+      "prerequisites": [
+        "retail-001"
+      ],
+      "skills": [
+        "sql-transactions",
+        "testing",
+        "data-idempotency"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ]
+    },
+    {
+      "id": "cloud-001",
+      "name": "Reporting API outage and safe GET retries",
+      "company": "atlas-retail",
+      "level": "trainee",
+      "status": "ready",
+      "path": "missions/cloud-001",
+      "starter": "missions/cloud-001/starter/client.py",
+      "submission": "submissions/cloud-001/client.py",
+      "grader": "missions/cloud-001/tests",
+      "prerequisites": [],
+      "skills": [
+        "git-branches",
+        "cloud-networking",
+        "testing"
       ],
       "review": [
         "Explain",
