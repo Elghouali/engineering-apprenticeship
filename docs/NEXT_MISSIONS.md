@@ -25,3 +25,11 @@ The longer-term aspiration is adaptive missions, human or AI-assisted code revie
 - [DATA-006](../missions/data-006/README.md): real Airflow DAG tasks executed for two historical dates, with a published Docker Compose learner harness; controlled scheduler-managed backfill passed in maintainer CI; multi-worker deployment is unverified.
 
 All prototypes must pass private maintainer reference validation and receive an independent learner test before being marked ready.
+
+## Cloud Engineering sprint (pre-release prototypes)
+
+- [CLOUD-003](../missions/cloud-003/README.md): a real two-service Docker Compose API cannot reach its private ledger; fix DNS, networking and host exposure.
+- [CLOUD-004](../missions/cloud-004/README.md): fail-closed Terraform plan review for replacement, public SSH and unmanaged drift, using provider-free real plan generation.
+- [CLOUD-005](../missions/cloud-005/README.md): implement a prefix-scoped AWS S3 IAM identity policy without broad object permissions.
+
+These remain prototype until private correct-solution validation and real runtime evidence pass. Cloud security examples do not substitute for full provider IAM evaluation or real account policies.

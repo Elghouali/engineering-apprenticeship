@@ -209,6 +209,86 @@
         "Defend"
       ],
       "contract_version": 1
+    },
+    {
+      "id": "cloud-003",
+      "name": "Docker API cannot resolve private ledger service",
+      "company": "atlas-retail",
+      "level": "junior",
+      "status": "prototype",
+      "path": "missions/cloud-003",
+      "starter": "missions/cloud-003/starter/network.py",
+      "submission": "submissions/cloud-003/network.py",
+      "grader": "missions/cloud-003/tests",
+      "prerequisites": [
+        "cloud-001"
+      ],
+      "skills": [
+        "container-networking",
+        "cloud-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-004",
+      "name": "Terraform plan destructive change and unmanaged drift",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/cloud-004",
+      "starter": "missions/cloud-004/starter/plan_guard.py",
+      "submission": "submissions/cloud-004/plan_guard.py",
+      "grader": "missions/cloud-004/tests",
+      "prerequisites": [
+        "cloud-002",
+        "cloud-003"
+      ],
+      "skills": [
+        "terraform-plan",
+        "cloud-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
+    },
+    {
+      "id": "cloud-005",
+      "name": "Least-privilege IAM permissions for S3 reports",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/cloud-005",
+      "starter": "missions/cloud-005/starter/policy.py",
+      "submission": "submissions/cloud-005/policy.py",
+      "grader": "missions/cloud-005/tests",
+      "prerequisites": [
+        "cloud-002",
+        "cloud-004"
+      ],
+      "skills": [
+        "iam-least-privilege",
+        "object-storage",
+        "terraform-plan"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
     }
   ]
 }

@@ -38,8 +38,9 @@ A learner gains this experience naturally while delivering each mission. The fir
 | --- | --- | --- | --- |
 | Trainee | HTTP reporting API returns 503 | TCP/HTTP, bounded retries, timeout budgets | CLOUD-001 prototype |
 | Junior | Object artifact overwritten or corrupted | Object keys, checksum, immutability | CLOUD-002 prototype |
-| Junior | Container cannot reach database | Docker networks, DNS, port binding, firewall | Planned |
-| Engineer | Terraform drift compromises access controls | Terraform state, plan, IAM least privilege | Planned |
+| Junior | Container cannot reach ledger service | Docker networks, DNS, port binding, firewall | CLOUD-003 prototype, real Docker validation pending |
+| Engineer | Terraform drift compromises a protected service | Terraform plan JSON, destructive plans, drift | CLOUD-004 prototype, real Terraform plan check pending |
+| Engineer | Reporting service receives excessive S3 permissions | Least privilege, resource ARNs, IAM conditions | CLOUD-005 prototype, local policy contract pending verification |
 | Engineer | Kubernetes rollout fails readiness | Probes, Services, rolling updates, rollback | Planned |
 | Engineer | AZ outage exposes a single point of failure | RTO/RPO, multi-AZ, backup/restore | Planned |
 | Engineer | Cloud bill increases unexpectedly | FinOps, storage lifecycle, quotas, monitoring | Planned |

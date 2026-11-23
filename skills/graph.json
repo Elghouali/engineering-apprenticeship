@@ -122,6 +122,30 @@
         "testing"
       ],
       "description": "DAG task dependencies, retry semantics, catchup and scheduling"
+    },
+    {
+      "id": "container-networking",
+      "prerequisites": [
+        "cloud-networking",
+        "testing"
+      ],
+      "description": "Container namespaces, Docker DNS, bridge networks, port exposure, readiness and failure isolation"
+    },
+    {
+      "id": "terraform-plan",
+      "prerequisites": [
+        "cloud-networking",
+        "testing"
+      ],
+      "description": "Terraform plan JSON, drift, replacements, destructive-action approval and safe infrastructure review"
+    },
+    {
+      "id": "iam-least-privilege",
+      "prerequisites": [
+        "object-storage",
+        "terraform-plan"
+      ],
+      "description": "Identity and resource policy scope, S3 ARN patterns and prefix-restricted permissions"
     }
   ]
 }
