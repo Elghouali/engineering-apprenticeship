@@ -44,7 +44,22 @@ python tools/apprentice.py start data-005
 python tools/apprentice.py check data-005
 ~~~
 
-The grader simulates a real crash/replay boundary against persistent SQLite. It does **not** yet start a real Kafka broker. A later optional live-broker harness must test actual consumer groups and offset commits before this mission can be called live-Kafka-verified.
+The base grader simulates a real crash/replay boundary against persistent SQLite. **Optional real broker integration** is available in this repository; it should not be called verified until executed.
+
+~~~bash
+# From missions/data-005:
+docker compose up -d
+python -m pip install -r requirements-kafka.txt
+# From the repository root, after starting a personal mission branch:
+python tools/apprentice.py start data-005
+python missions/data-005/tools/broker_smoke.py --module submissions/data-005/inbox.py
+# Cleanup:
+docker compose -f missions/data-005/docker-compose.yml down
+~~~
+
+The local broker binds only to 127.0.0.1. The smoke harness produces synthetic events to a unique topic, crashes after SQLite commit but before broker acknowledgement, restarts with the same group, checks the replayed offset and verifies the final ledger and committed Kafka offset. Use a dedicated local environment: the harness executes the provided Python submission.
+
+Do not claim that running unit tests is the same as verifying live Kafka semantics.
 
 ## Engineer's PR must explain
 
