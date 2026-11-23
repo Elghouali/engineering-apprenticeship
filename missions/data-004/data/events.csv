@@ -1,0 +1,7 @@
+event_id,merchant_id,amount_cents,status
+e1,whale,100,paid
+e1,whale,100,paid
+e2,whale,350,paid
+e3,tiny,500,cancelled
+e4,tiny,30,paid
+e5,zero,200,cancelled
