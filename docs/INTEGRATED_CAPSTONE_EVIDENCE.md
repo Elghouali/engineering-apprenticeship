@@ -43,12 +43,20 @@ flowchart TD
 
 The integrated [capstone README](../capstones/atlas-retail-integrated/README.md) includes Docker Compose commands and destructive test cleanup warnings. Five real company Issues were created ([CAPSTONE-001](https://github.com/Elghouali/engineering-apprenticeship/issues/7), [002](https://github.com/Elghouali/engineering-apprenticeship/issues/8), [003](https://github.com/Elghouali/engineering-apprenticeship/issues/9), [004](https://github.com/Elghouali/engineering-apprenticeship/issues/10), [005](https://github.com/Elghouali/engineering-apprenticeship/issues/11)). They are **pre-release**; independent accepted learner solutions and the whole progression have not been demonstrated.
 
+## Integrated Stage 3 — latest verified CI
+
+[GitHub Actions run 45243392488](https://github.com/Elghouali/engineering-apprenticeship/actions/runs/45243392488) completed successfully with **all seven jobs passing** on the feature branch: `airflow-scheduler-backfill`, `kubernetes-integrated-api`, Ubuntu/Windows unit contracts, `airflow-integrated-dag`, `spark-postgres-objectstore`, and `real-stack`.
+
+The integrated Airflow scheduler exercised two historical dates through real Kafka/PostgreSQL/S3; the Kind test exercised the real reporting API against Kubernetes-local PostgreSQL/S3 and an unsuccessful image rollout followed by rollback. **Limitations:** this is a disposable single-node lab; Kafka is not in Kind, no multi-worker scheduler fault tolerance has been demonstrated, and it is not a production-scale resilience certification.
+
 ## Next acceptance gates
 
 - [x] Replace the max-1,000 driver-collected Spark snapshot with partitioned JDBC reads and verify an input larger than 1,000 events in real integration CI.
 - [ ] Independently demonstrate performance trade-offs and skew on multiple much larger workloads, plus safe consistent snapshots, distributed workers and failure recovery.
-- [ ] Schedule and backfill multiple *independent* business dates with the integrated Airflow DAG, preserving immutable reports and recovery.
-- [ ] Deploy the **integrated** API in a disposable Kubernetes cluster with real service dependency connectivity and rollback; the standalone CLOUD-006 kind test does not count for this.
+- [x] Execute a scheduler-managed two-date integrated Airflow backfill and independently verify immutable PostgreSQL/S3 partitions (single-node CI).
+- [ ] Demonstrate multi-worker backfill failure injection and recovery without corrupted partitions.
+- [x] Deploy the integrated reporting API in disposable Kind with PostgreSQL/S3 dependency connectivity, failed image rollout and rollback.
+- [ ] Deploy and recover the complete Kafka→PostgreSQL→S3 streaming platform in Kubernetes, not only its reporting/data-serving slice.
 - [ ] Add monitoring, audit/recovery metrics, secret isolation and stronger object-store conditional write policy.
 - [ ] Independently validate the complete fork → mission Issues → Actions → learner PR → capstone workflow on a fresh Windows and Linux environment.
 - [ ] Complete security and license approval before a public release.
