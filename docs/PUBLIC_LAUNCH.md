@@ -24,6 +24,12 @@ A complete public learner journey must work without founder intervention: read a
 - [x] CLOUD-006 real local kind: two Ready pods, Service HTTP, deliberately broken image rollout and successful rollback
 - [ ] Broader Cloud Engineering, including resilient workloads, multi-AZ and multicloud recovery
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
+
+- [x] Verify Stage 1 integrated Kafka 4.4 broker -> PostgreSQL 16 event inbox -> S3-compatible Gold -> localhost HTTP against actual Docker services; includes a crash before broker acknowledgement, safe replay and 22,000-cent parity
+- [x] Verify real PySpark 4.0.3 over the bounded PostgreSQL snapshot, exact financial parity and created/replayed S3 Gold publication
+- [x] Verify an actual Airflow 3 Task SDK DAG executing the SAME Kafka, PostgreSQL and S3 stages, with 5 accepted events and verified 22,000 cents
+- [ ] Replace bounded Spark driver snapshot with scale-safe distributed ingestion, historical Airflow scheduler backfills on the integrated platform and Kubernetes deployment/recovery
+- [ ] Build and independently grade learner-authored changes across all five connected capstone GitHub Issues
 - [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook
 - [x] Platform integrity, local SQLite/HTTP capstone and prototype-starter checks passed on Ubuntu and Windows GitHub runners
 - [ ] Independent Windows and Linux learner-submission and distributed-lab verification with documented prerequisites

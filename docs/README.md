@@ -30,6 +30,7 @@
 
 | Evidence | What was checked |
 | --- | --- |
+| [Integrated Capstone](INTEGRATED_CAPSTONE_EVIDENCE.md) | Actual Kafka, PostgreSQL, Spark, S3-compatible storage, Airflow and reporting API; limitations |
 | [Spark Benchmark](SPARK_BENCHMARK_EVIDENCE.md) | Small local skew workload and controlled salting comparison |
 | [Airflow Backfill](AIRFLOW_BACKFILL_EVIDENCE.md) | Two historical dates scheduled and published by local Airflow |
 | [Cloud Sprint](CLOUD_SPRINT_EVIDENCE.md) | Local Docker, provider-free Terraform and disposable Kubernetes |

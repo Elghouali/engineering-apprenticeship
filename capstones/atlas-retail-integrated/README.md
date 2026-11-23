@@ -100,6 +100,66 @@ python -m unittest discover -s capstones/atlas-retail-integrated/tests -v
 
 These tests verify the deterministic business contract even when Docker is unavailable. The separate [end-to-end CI workflow](../../.github/workflows/atlas-integrated.yml) exercises the real containers. A Docker fixture is not a production resiliency, security or scale test.
 
+
+## Stage 2 — Verified real Spark and Airflow integration
+
+The first baseline remains unchanged and fully tested. Stage 2 adds **two independently executed runtime paths over the SAME PostgreSQL/Kafka/S3 setup**.
+
+~~~mermaid
+flowchart LR
+  K["Kafka real events"] --> PG[("PostgreSQL unique ledger")]
+  PG --> SQL["Python Gold publication"]
+  PG --> S["Spark 4.0.3 local transform"]
+  SQL --> O[("S3-compatible object store")]
+  S --> O
+  A["Airflow 3 DAG tasks"] --> K
+  A --> PG
+  A --> O
+  O --> API["Verified reporting API"]
+~~~
+
+### Spark: parity, S3 publication, replay
+
+A separate Spark image reads a **bounded driver snapshot** of the already deduplicated PostgreSQL records (maximum 1,000 events). It aggregates integer-cent paid revenue using real local Spark 4.0.3, compares the result to the PostgreSQL business contract, writes `gold-spark/2026-11-20/revenue.json` to the same S3-compatible store, reads it back and confirms a second run is replay-safe.
+
+~~~bash
+# From the capstone directory, with a clean disposable stack:
+docker compose up -d postgres kafka objectstore
+docker compose build runner spark
+docker compose run --rm runner demo
+docker compose run --rm spark
+docker compose run --rm spark
+~~~
+
+The first Spark publish returns `created`; the identical rerun returns `replayed`. **This is not a scalable Spark JDBC/CDC implementation**: the source snapshot is collected into the driver before Spark processing, and the input contains only five unique business events. [CAPSTONE-003](tickets/CAPSTONE-003.md) will replace this bridge with a scalable, independently benchmarked ingestion design.
+
+### Airflow: real shared-pipeline tasks
+
+The [Airflow 3 Task SDK DAG](airflow/dags/atlas_integrated.py) invokes the actual Kafka producer, PostgreSQL consumer, S3 publisher and final verification logic, with task order:
+
+~~~text
+seed_kafka -> persist_postgres -> publish_s3_gold -> verify_lineage
+~~~
+
+~~~bash
+# From the capstone directory, with a disposable stack:
+docker compose up -d postgres kafka objectstore
+docker compose build airflow runner
+docker compose --profile airflow run --rm airflow bash -c "airflow db migrate && airflow dags test atlas_integrated_pipeline 2026-11-20"
+docker compose run --rm runner verify
+~~~
+
+A full CI run executed and marked all four DAG tasks successful, returning 5 accepted unique events and 22,000 paid cents. This particular integrated DAG uses **manual execution and a fixed synthetic business date**: a scheduler-managed, partitioned multi-day historical backfill for this new platform has **not** yet been verified. See [CAPSTONE-004](tickets/CAPSTONE-004.md).
+
+### Reproducible isolated CI smoke scripts
+
+- `bash ci/smoke.sh` — real Kafka/Postgres/S3/API, crash-after-commit replay, verification.
+- `bash ci/spark.sh` — same durable records, Spark calculation, S3 artifact and replay.
+- `bash ci/airflow.sh` — actual shared Airflow DAG task execution and financial verification.
+
+**All three scripts delete disposable Docker volumes after finishing**. Never run them against existing valuable data or a shared production context. See the [verified CI evidence report](../../docs/INTEGRATED_CAPSTONE_EVIDENCE.md).
+
+
 ## Repository structure
 
 ~~~text
@@ -113,6 +173,12 @@ atlas-retail-integrated/
 ├── tests/test_logic.py     # Portable contract/failure tests
 ├── ci/smoke.sh             # Disposable end-to-end crash/replay smoke run
 ├── ci/smoke_http.py        # Independent health and financial verification
+├── spark_job.py            # Real local Spark vs PostgreSQL financial parity
+├── Dockerfile.spark        # Java 17 / PySpark 4.0.3 runtime
+├── airflow/dags/           # Airflow 3 Task SDK shared application tasks
+├── Dockerfile.airflow      # Real Airflow 3 task runtime
+├── ci/spark.sh             # Spark/PostgreSQL/S3 integration
+├── ci/airflow.sh           # Integrated Airflow DAG execution
 ├── tickets/                # Upcoming GitHub-native learner change requests
 └── RUNBOOK.md              # Investigation and recovery procedures
 ~~~
@@ -127,7 +193,7 @@ The baseline is **not** the student's completed answer. The academy will publish
 4. [CAPSTONE-004 — Orchestrate backfills with Airflow](tickets/CAPSTONE-004.md) — task dependencies, deterministic business dates, failure recovery.
 5. [CAPSTONE-005 — Deploy and recover the reporting API on Kubernetes](tickets/CAPSTONE-005.md) — Service, probes, rollout and incident triage.
 
-**Status distinction:** Tickets are an engineering backlog, not automatically finished graded assignments. Spark, Airflow and Kubernetes integration into this same capstone are the next build stages. The existing [12 standalone missions](../../missions/README.md) already have public contracts and private correct references, but the *integrated* assignment has not been independently completed.
+**Status distinction:** Tickets are an engineering backlog, not automatically finished graded assignments. Bounded real Spark and manually triggered Airflow integrations are now validated; scalable Spark ingestion, scheduler-managed integrated backfills and Kubernetes deployment are still future incident deliverables. The existing [12 standalone missions](../../missions/README.md) already have public contracts and private correct references, but the *integrated* assignment has not been independently completed.
 
 ## Honest scope and security
 

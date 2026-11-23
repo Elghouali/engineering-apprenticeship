@@ -52,7 +52,7 @@ A learner gains this experience naturally while delivering each mission. The fir
 
 **Learner capstone to build:** extend and maintain this service across multiple incident tickets, including bad-source backfills, monitoring, historical data correction, idempotent upload, cloud architecture review and disaster recovery. The learner must demonstrate an independent solution in their own fork with test evidence and a design review.
 
-**Advanced capstone planned:** event-driven retail lakehouse using PostgreSQL, Kafka, Spark, object storage, Airflow, warehouse queries, Docker-based CI and optional AWS/GCP/Azure deployments. Never mark as verified until the full distributed stack has actually run.
+**Advanced integrated capstone is underway:** [Atlas Retail Integrated Platform](../capstones/atlas-retail-integrated/README.md) now runs a real local Kafka broker, PostgreSQL inbox/ledger, S3-compatible store, verified reporting API, bounded PySpark 4.0.3 transform and a manual Airflow 3 DAG against the same data. [Actual CI verification](INTEGRATED_CAPSTONE_EVIDENCE.md) passed. Scale-safe Spark ingestion, distributed event processing, integrated scheduler-managed backfills, Kubernetes, independent learner PR validation, and controlled AWS/GCP/Azure deployments remain future gates.
 
 ## Evidence rubric
 

@@ -103,7 +103,7 @@ On Windows, \`py -3\` may replace \`python\`; in PowerShell use the same Python 
 
 ## Reference platform and verification evidence
 
-The [Atlas Retail local data product](capstones/atlas-retail-platform/README.md) currently implements synthetic CSV ingestion → validation/deduplication → SQLite → Gold revenue → checked release manifests → freshness checks → a **localhost-only HTTP API**. It runs without installing distributed services.
+Two distinct references now exist: the [standard-library SQLite data product](capstones/atlas-retail-platform/README.md) and a [real integrated container platform](capstones/atlas-retail-integrated/README.md) connecting Kafka, PostgreSQL, S3-compatible storage, Spark, Airflow and localhost HTTP. [The integration report](docs/INTEGRATED_CAPSTONE_EVIDENCE.md) identifies exactly which stages were validated and which remain incomplete.
 
 Maintainer-only CI separately tested correct references on Linux and Windows and selected runtime paths: [Spark benchmark](docs/SPARK_BENCHMARK_EVIDENCE.md), [Kafka replay](missions/data-005/README.md), [Airflow scheduler backfill](docs/AIRFLOW_BACKFILL_EVIDENCE.md) and [Docker/Terraform/Kubernetes evidence](docs/CLOUD_SPRINT_EVIDENCE.md). **S3 IAM was structurally tested, not authorized against AWS.** Correct reference implementations are kept in a separate **private** maintainer repository and are never part of public exercises.
 
@@ -111,7 +111,7 @@ This repo is **already public to inspect**, but the educational release has not 
 
 ## Open development roadmap
 
-1. **Integrated platform Stage 1 is implemented, pending real integration verification:** Kafka delivery, PostgreSQL replay-safe inbox, S3-compatible report, local HTTP. [See its current status and incident backlog](capstones/atlas-retail-integrated/README.md). Finish connecting Spark, Airflow and Kubernetes and independently test it with first-time users.
+1. **Integrated platform Stage 1 and bounded Stage 2 are verified in real local CI:** Kafka delivery, PostgreSQL replay-safe ledger, S3-compatible Gold, local reporting API, actual Spark computation and actual Airflow DAG tasks. [See the integrated platform](capstones/atlas-retail-integrated/README.md) and [verification evidence](docs/INTEGRATED_CAPSTONE_EVIDENCE.md). Real Kubernetes deployment, scalable distributed ingestion and independent learner acceptance remain outstanding.
 2. Build the **learner-assigned, end-to-end Data + Cloud capstone** connecting ingestion, Kafka, Spark, orchestration, storage, deployment, observability and incident recovery.
 3. Expand SQL/warehousing, multi-cloud foundations, production operations and resilient workloads.
 4. Run independent Windows/Linux fork → branch → CI → PR acceptance tests.

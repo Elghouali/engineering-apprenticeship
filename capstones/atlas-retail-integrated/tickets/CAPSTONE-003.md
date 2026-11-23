@@ -1,8 +1,8 @@
 # CAPSTONE-003 — Bring Spark into the shared data platform
 
-**Role:** Data Engineer · **Status:** planned, not a finished Spark capstone implementation.
+**Role:** Data Engineer · **Status:** pre-release change request. A bounded real Spark-to-PostgreSQL/S3 baseline exists; scalable source ingestion and benchmarking remain to be built.
 
-**Incident:** Increasing daily reporting volume makes direct single-process aggregation a bottleneck. One merchant dominates a shuffle stage; event replay also creates duplicates.
+**Incident:** The current real Spark bridge first collects a maximum 1,000 PostgreSQL rows into the Spark driver. Increasing daily volume will exceed the safety bound and stop processing. One merchant may also dominate a shuffle stage.
 
 **Acceptance intent:** Read a durable snapshot from the PostgreSQL stage (or an immutable, verified landing artifact), transform it using a real local Spark session, compare exact integer-cent results to business state and export a provenance-aware Gold artifact. Measure physical plans and task time; do not invent a speedup.
 

@@ -55,3 +55,14 @@ For debugging, first save logs and synthetic fixture hashes; never run destructi
 It does not specify a production DR RTO/RPO, multi-broker Kafka recovery, replica failover, KMS permissions, S3 version history, SLA compliance, a public ingress or production monitoring. Those are future company incidents and need their own evidence.
 
 Official references: https://www.postgresql.org/docs/16/index.html · https://kafka.apache.org/44/documentation/ · https://github.com/seaweedfs/minio-compat
+
+
+## Stage 2: Spark and Airflow investigations
+
+**Spark report disagrees with PostgreSQL:** First verify the durable inbox replay and business-date filtering. The baseline PySpark bridge reads at most 1,000 rows into the driver for teaching. It must never silently skip larger input or publish a report whose integer cents do not match the business contract. Look at the separate `gold-spark/<date>/revenue.json` key, inspect Spark stage logs, and run `bash ci/spark.sh` only on disposable volumes.
+
+**Airflow DAG fails after seed or before publish:** Do not assume an unfinished task means nothing was persisted. Kafka messages and PostgreSQL rows may already exist. A retry must use the same event IDs, preserve unique business state and revalidate the published S3 object. Run `bash ci/airflow.sh` in a disposable stack, inspect task-specific Airflow logs, and distinguish `airflow dags test` from a real scheduler-managed multi-day backfill. The integrated DAG is currently manual/fixed-date; that is a deliberate outstanding change request.
+
+**Never use S3 overwrite as a shortcut:** If a published partition differs from business state, stop and escalate. The single-writer lab's check-before-put is not a distributed conditional write or a concurrency guarantee.
+
+[Public integration evidence](../../docs/INTEGRATED_CAPSTONE_EVIDENCE.md).
