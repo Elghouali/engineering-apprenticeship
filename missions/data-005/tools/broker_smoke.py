@@ -142,7 +142,7 @@ def run(module_path: Path, bootstrap: str):
 
                 def ack(topic_name, partition, offset):
                     tp = TopicPartition(topic_name, partition)
-                    second_consumer.commit({tp: OffsetAndMetadata(offset + 1, "")})
+                    second_consumer.commit({tp: OffsetAndMetadata(offset + 1, "", -1)})
 
                 replay = consume_one(second_consumer, time.monotonic() + 45)
                 if replay.offset != first_record.offset:
