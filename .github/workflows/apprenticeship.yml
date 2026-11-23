@@ -28,6 +28,8 @@ jobs:
           python-version: "3.11"
       - name: Validate mission contracts, dependencies and CLI
         run: python -m unittest discover -s tests -v
+      - name: Verify real end-to-end data product and failure recovery
+        run: python -m unittest discover -s capstones/atlas-retail-platform/tests -v
       - name: Show available assignments
         run: python tools/apprentice.py list
 
