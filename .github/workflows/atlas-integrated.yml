@@ -112,3 +112,14 @@ jobs:
         run: |
           cd capstones/atlas-retail-integrated
           docker compose --profile airflow --profile tools --profile api down -v --remove-orphans || true
+
+  airflow-scheduler-backfill:
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 34
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Execute two bounded scheduler-managed Airflow historical dates
+        run: bash capstones/atlas-retail-integrated/ci/airflow_scheduler.sh
