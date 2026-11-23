@@ -5,7 +5,7 @@
 Our goal is an open-source, **GitHub-native Big Data and Cloud Engineering apprenticeship**. No course website. Learners become engineers by receiving realistic tickets, investigating intentionally broken code, fixing it, documenting operational decisions and reviewing pull requests.
 
 **Two audiences:**
-- **Public learners (after launch):** [Learner Guide](docs/LEARNER_GUIDE.md) — fork the repository, work in your own branch, use your own GitHub Actions, keep assignments out of the upstream main branch.
+- **Public learners (after launch):** [Learner Guide](docs/LEARNER_GUIDE.md) and [GitHub skills field guide](docs/GITHUB_WORKFLOW.md) — fork the repository, work in your own branch, use your own GitHub Actions, keep assignments out of the upstream main branch.
 - **Maintainers and contributors:** [Maintainer Guide](docs/MAINTAINER_GUIDE.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Licensing decision](docs/LICENSING_DECISION.md).
 
 ## The method: PR-Driven Apprenticeship

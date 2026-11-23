@@ -24,7 +24,8 @@ A complete public learner journey must work without founder intervention: read a
 
 - [x] Public onboarding and fork-based workflow documented
 - [ ] First-time user flow validated by someone unfamiliar with the repository
-- [ ] Beginner Git/Python installation and troubleshooting covered
+- [x] GitHub-native fork, branch, PR and CI troubleshooting reference authored
+- [ ] Independent beginner confirmation that the instructions work on a fresh account and laptop
 - [ ] Navigation from beginner to capstone with real prerequisites
 - [ ] Correct accessible documentation and link checks
 - [ ] Example PR review demonstrating expected reasoning without exposing solutions

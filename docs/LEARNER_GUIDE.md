@@ -23,6 +23,10 @@ Free GitHub account, Git, Python 3.11+, and a text editor. Docker is needed only
 
 No public learner should need write access to the project owner account. Learner solutions remain in personal forks unless a maintainer explicitly requests an upstream contribution.
 
+## Master GitHub through the actual workflow
+
+The [GitHub Skills Field Guide](GITHUB_WORKFLOW.md) covers Git remote configuration, meaningful commits, PR comparisons, reviewers, Actions failures, merge conflicts and keeping your fork up to date.
+
 ## Daily engineering habits
 
 GitHub Issues hold requirements; branches isolate experiments; commits document decisions; PRs demonstrate code review; Actions show real failing and passing checks. A successful CI run is not a professional certificate.
