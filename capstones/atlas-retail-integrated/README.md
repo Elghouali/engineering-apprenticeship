@@ -166,6 +166,28 @@ A full CI run executed and marked all four DAG tasks successful, returning 5 acc
 **All three scripts delete disposable Docker volumes after finishing**. Never run them against existing valuable data or a shared production context. See the [verified CI evidence report](../../docs/INTEGRATED_CAPSTONE_EVIDENCE.md).
 
 
+## Stage 3 — Two new integration gates (IMPLEMENTED, CI VALIDATION PENDING)
+
+### Date-scoped Airflow 3 backfill
+
+The integrated `atlas_integrated_pipeline` DAG now receives each business date from Airflow's logical-date context, **not from the worker clock**. It uses deterministic synthetic event IDs per day, persists through the same Kafka consumer/PostgreSQL durable inbox, and publishes immutable S3 Gold keys under that day's partition. The DAG has a 02:00 UTC daily schedule, two retries and one maximum active run. Historical dates are requested through Airflow 3's bounded backfill CLI.
+
+- `bash ci/airflow.sh`: direct DAG execution for November 20, November 21 and a replay of November 20. This is **not** scheduler evidence.
+- `bash ci/airflow_scheduler.sh`: separate Airflow standalone scheduler + explicit two-day historical backfill + independently verified PostgreSQL/S3 partitions. This CI job is **new and must pass before claiming scheduler validation**.
+
+These are synthetic dates and the platform still has only one Kafka group/broker, single-writer object publication and a local Airflow metadata database. [CAPSTONE-004](tickets/CAPSTONE-004.md) stays open until CI and retry/recovery evidence are reviewed.
+
+### Kubernetes integrated reporting API
+
+The [Kind lab manifest](k8s/stack.yaml) runs real PostgreSQL and an S3-compatible object store inside a disposable `atlas-lab` namespace. A **synthetic seeding Job** writes the same five distinct business events using the shared durable business functions and publishes the Gold report. The actual reporting API is deployed as a private ClusterIP Service with:
+
+- `/live`: process liveness, independent of downstream failures.
+- `/health`: readiness, returns 200 only when the PostgreSQL/S3 report verifies.
+- Non-root API runtime, read-only root filesystem, no public Ingress/LoadBalancer, no automatic ServiceAccount credentials, one available replica during rolling updates.
+- [CI script](ci/kind.sh) creates a disposable Kind cluster, verifies real HTTP financial totals, injects an unresolvable API image and rolls back to the healthy version.
+
+**Important boundary:** Kafka is not deployed into Kind; the seeding Job populates PostgreSQL directly. Thus this validates the integrated *reporting/data-serving slice*, **not** a fully Kubernetes-hosted streaming pipeline. This is an implementation awaiting live CI verification, not a production-ready Kubernetes reference. All in-repo credentials are *synthetic training-only*, and both databases use ephemeral storage. [CAPSTONE-005](tickets/CAPSTONE-005.md) remains open until live acceptance passes.
+
 ## Repository structure
 
 ~~~text
