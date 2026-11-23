@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512" role="img" aria-labelledby="title desc">
+<title id="title">Engineering Apprenticeship symbol</title><desc id="desc">Two ascending angular paths converge at a summit, representing the learning journey and collaborative engineering.</desc>
+<defs><linearGradient id="path" x1="0" x2="1" y1="1" y2="0"><stop offset="0" stop-color="#2688FF"/><stop offset=".55" stop-color="#22C3EE"/><stop offset="1" stop-color="#E9F7FF"/></linearGradient></defs>
+<rect width="512" height="512" rx="112" fill="#081220"/>
+<path d="M64 354 189 189l39 49-83 116H64Z" fill="#2688FF"/>
+<path d="M168 354 300 142l150 212h-73L302 251l-66 103h-68Z" fill="url(#path)"/>
+<path d="m192 307 51-74 29 33-27 41h-53Z" fill="#0B2544"/>
+<circle cx="301" cy="142" r="10" fill="#22C3EE"/>
+</svg>
