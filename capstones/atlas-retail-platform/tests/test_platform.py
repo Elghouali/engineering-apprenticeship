@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import csv
+from contextlib import closing
 from datetime import date
 import importlib.util
 import json
@@ -36,7 +37,7 @@ class DataProductTests(unittest.TestCase):
         self.assertEqual(platform.verify(self.out), data)
 
         path = self.out / "releases" / data["release_id"]
-        with sqlite3.connect(path / "orders.db") as db:
+        with closing(sqlite3.connect(path / "orders.db")) as db:
             orders = db.execute("SELECT order_id FROM orders ORDER BY order_id").fetchall()
             self.assertEqual(orders, [("1001",), ("1002",), ("1003",), ("1005",)])
         with (path / "gold.csv").open(newline="", encoding="utf-8") as handle:
