@@ -62,3 +62,28 @@ jobs:
         run: |
           cd capstones/atlas-retail-integrated
           docker compose --profile tools --profile api down -v --remove-orphans || true
+  
+  spark-postgres-objectstore:
+    # Trusted maintainer pushes only. CI never processes third-party PR Dockerfiles.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: Validate Spark Compose wiring before launch
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml --profile spark config --quiet
+      - name: Real PySpark computation over PostgreSQL snapshot and S3 artifact
+        run: bash capstones/atlas-retail-integrated/ci/spark.sh
+      - name: Inspect container state on failure
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile spark ps || true
+          docker compose --profile spark logs --tail=70 || true
+      - name: Delete all disposable Spark integration volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile tools --profile spark --profile api down -v --remove-orphans || true
