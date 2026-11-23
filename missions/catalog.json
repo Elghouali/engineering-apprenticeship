@@ -289,6 +289,33 @@
         "Defend"
       ],
       "contract_version": 1
+    },
+    {
+      "id": "cloud-006",
+      "name": "Kubernetes Deployment remains unready after rollout",
+      "company": "atlas-retail",
+      "level": "engineer",
+      "status": "prototype",
+      "path": "missions/cloud-006",
+      "starter": "missions/cloud-006/starter/k8s.py",
+      "submission": "submissions/cloud-006/k8s.py",
+      "grader": "missions/cloud-006/tests",
+      "prerequisites": [
+        "cloud-003",
+        "cloud-004"
+      ],
+      "skills": [
+        "kubernetes-rollout",
+        "container-networking",
+        "testing"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ],
+      "contract_version": 1
     }
   ]
 }

@@ -21,7 +21,8 @@ A complete public learner journey must work without founder intervention: read a
 - [ ] Independent larger-scale Spark performance experiments and production-like multi-worker Airflow resilience
 - [ ] Complete advanced Big Data curriculum including SQL optimization and advanced production operations
 - [ ] Validate CLOUD-003/004/005 private references, actual Docker DNS connectivity and Terraform plan JSON (prototypes implemented; not yet verified)
-- [ ] Broader Cloud Engineering, including Kubernetes, resilient workloads and multicloud recovery
+- [ ] Verify CLOUD-006 Kubernetes live kind rollout, readiness and rollback against the confidential reference
+- [ ] Broader Cloud Engineering, including resilient workloads, multi-AZ and multicloud recovery
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
 - [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook
 - [x] Platform integrity, local SQLite/HTTP capstone and prototype-starter checks passed on Ubuntu and Windows GitHub runners

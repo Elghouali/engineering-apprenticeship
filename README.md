@@ -39,6 +39,7 @@ GitHub itself is the classroom: Issues are work requests, branches are experimen
 | [CLOUD-003](missions/cloud-003/README.md) | Cloud Engineer | Reporting API cannot resolve internal ledger | Docker DNS, bridge networks, port exposure |
 | [CLOUD-004](missions/cloud-004/README.md) | Cloud Platform Engineer | Dangerous Terraform replacement and drift | Plan JSON, drift, protected resources |
 | [CLOUD-005](missions/cloud-005/README.md) | Cloud Security Engineer | Reporting service has wildcard S3 access | IAM, least privilege, object ARN scoping |
+| [CLOUD-006](missions/cloud-006/README.md) | Cloud Platform Engineer | Reports deployment stuck unready | Kubernetes Deployment, probes, Services, rollout |
 
 Advanced missions include **maintainer-verified real local PySpark aggregation** (DATA-004) and **a real local Kafka broker crash/replay smoke test** (DATA-005), plus a validated Airflow Task SDK DAG structure (DATA-006). A measured Spark comparison and a controlled **real Airflow scheduler-managed historical backfill** have now passed maintainer CI. These validate a local synthetic environment, not production scalability or a public learner rollout. These are still prototypes pending wider public learner acceptance testing.
 

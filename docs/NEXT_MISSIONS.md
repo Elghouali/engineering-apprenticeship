@@ -31,5 +31,6 @@ All prototypes must pass private maintainer reference validation and receive an 
 - [CLOUD-003](../missions/cloud-003/README.md): a real two-service Docker Compose API cannot reach its private ledger; fix DNS, networking and host exposure.
 - [CLOUD-004](../missions/cloud-004/README.md): fail-closed Terraform plan review for replacement, public SSH and unmanaged drift, using provider-free real plan generation.
 - [CLOUD-005](../missions/cloud-005/README.md): implement a prefix-scoped AWS S3 IAM identity policy without broad object permissions.
+- [CLOUD-006](../missions/cloud-006/README.md): broken Kubernetes rollout probes and Service selector, to be verified with a disposable kind cluster.
 
 These remain prototype until private correct-solution validation and real runtime evidence pass. Cloud security examples do not substitute for full provider IAM evaluation or real account policies.

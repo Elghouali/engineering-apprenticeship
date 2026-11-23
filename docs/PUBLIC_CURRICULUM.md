@@ -41,7 +41,7 @@ A learner gains this experience naturally while delivering each mission. The fir
 | Junior | Container cannot reach ledger service | Docker networks, DNS, port binding, firewall | CLOUD-003 prototype, real Docker validation pending |
 | Engineer | Terraform drift compromises a protected service | Terraform plan JSON, destructive plans, drift | CLOUD-004 prototype, real Terraform plan check pending |
 | Engineer | Reporting service receives excessive S3 permissions | Least privilege, resource ARNs, IAM conditions | CLOUD-005 prototype, local policy contract pending verification |
-| Engineer | Kubernetes rollout fails readiness | Probes, Services, rolling updates, rollback | Planned |
+| Engineer | Kubernetes rollout fails readiness | Probes, Services, rolling updates, rollback | CLOUD-006 prototype; local cluster integration pending |
 | Engineer | AZ outage exposes a single point of failure | RTO/RPO, multi-AZ, backup/restore | Planned |
 | Engineer | Cloud bill increases unexpectedly | FinOps, storage lifecycle, quotas, monitoring | Planned |
 | Senior simulation | Design secure multi-cloud analytics deployment | AWS/GCP/Azure comparison, IaC, observability | Planned |

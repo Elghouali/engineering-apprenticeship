@@ -146,6 +146,14 @@
         "terraform-plan"
       ],
       "description": "Identity and resource policy scope, S3 ARN patterns and prefix-restricted permissions"
+    },
+    {
+      "id": "kubernetes-rollout",
+      "prerequisites": [
+        "container-networking",
+        "testing"
+      ],
+      "description": "Pod readiness vs liveness, Service selectors, resources, rolling-update availability, failure recovery"
     }
   ]
 }
