@@ -18,7 +18,7 @@ There is **no separate web academy**. GitHub is the learning interface: Issues, 
 | Learn Git and GitHub through the tasks | [GitHub Field Guide](docs/GITHUB_WORKFLOW.md) |
 | Learn how to use a personal fork | [Learner Guide](docs/LEARNER_GUIDE.md) — for use after launch |
 | Understand our fictional employer | [Atlas Retail](companies/atlas-retail/README.md) |
-| Inspect a running reference system | [Local data-product capstone](capstones/atlas-retail-platform/README.md) |
+| Inspect a running reference system | [Local SQLite reference](capstones/atlas-retail-platform/README.md) or [integrated Kafka/PostgreSQL/S3 capstone](capstones/atlas-retail-integrated/README.md) |
 | Improve the academy itself | [Contributing](CONTRIBUTING.md) and [Maintainer Handbook](docs/MAINTAINER_GUIDE.md) |
 | Check what is actually finished | [Public launch checklist](docs/PUBLIC_LAUNCH.md) and [evidence library](docs/README.md) |
 
@@ -111,7 +111,7 @@ This repo is **already public to inspect**, but the educational release has not 
 
 ## Open development roadmap
 
-1. **Complete the README and onboarding system**, then test it with real first-time users.
+1. **Integrated platform Stage 1 is implemented, pending real integration verification:** Kafka delivery, PostgreSQL replay-safe inbox, S3-compatible report, local HTTP. [See its current status and incident backlog](capstones/atlas-retail-integrated/README.md). Finish connecting Spark, Airflow and Kubernetes and independently test it with first-time users.
 2. Build the **learner-assigned, end-to-end Data + Cloud capstone** connecting ingestion, Kafka, Spark, orchestration, storage, deployment, observability and incident recovery.
 3. Expand SQL/warehousing, multi-cloud foundations, production operations and resilient workloads.
 4. Run independent Windows/Linux fork → branch → CI → PR acceptance tests.

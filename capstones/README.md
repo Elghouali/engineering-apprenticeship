@@ -8,7 +8,9 @@ The capstone goal is to **maintain a real system under evolving GitHub Issues**,
 
 **[Atlas Retail Data Product](atlas-retail-platform/README.md)** — working local reference: synthetic order CSV → validation and deduplication → SQLite → paid revenue and rejection outputs → checksummed release manifest → freshness monitoring → localhost reporting API. It has real integration tests and an operator runbook. Python 3.11+ and no cloud account required.
 
-This is a **maintainer reference and integration test target**, not yet a finalized learner assignment. It does not currently run an integrated Spark + Kafka + Airflow + Kubernetes production-style data platform.
+**[Atlas Retail Integrated Platform](atlas-retail-integrated/README.md)** — first connected implementation of real Kafka event ingestion, PostgreSQL durable event storage, S3-compatible published reporting and a loopback HTTP API. This is a **pre-release vertical slice**, with [incident backlog](atlas-retail-integrated/tickets/CAPSTONE-001.md), a disposable Docker Compose stack and a real integration smoke workflow. Spark, Airflow and Kubernetes are **not yet integrated into this platform**.
+
+The existing SQLite example remains a **maintainer reference and integration test target**, not yet a finalized learner assignment. It does not currently run an integrated Spark + Kafka + Airflow + Kubernetes production-style data platform.
 
 ## Planned learner-owned capstone
 

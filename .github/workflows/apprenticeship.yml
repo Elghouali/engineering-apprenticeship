@@ -36,6 +36,8 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Verify real end-to-end data product and failure recovery
         run: python -m unittest discover -s capstones/atlas-retail-platform/tests -v
+      - name: Check new integrated capstone pure business contracts
+        run: python -m unittest discover -s capstones/atlas-retail-integrated/tests -v
       - name: Check all internal documentation references
         run: python tools/verify_links.py
       - name: Show available assignments
@@ -66,3 +68,5 @@ jobs:
         run: docker compose -f missions/data-006/docker-compose.yml config --quiet
       - name: Validate local Kafka broker Docker Compose contract
         run: docker compose -f missions/data-005/docker-compose.yml config --quiet
+      - name: Validate integrated Kafka/Postgres/S3 local Compose contract
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml config --quiet
