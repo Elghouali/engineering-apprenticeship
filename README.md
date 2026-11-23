@@ -66,7 +66,7 @@ The starter is deliberately faulty; initial test failures are expected. The star
 - [Mission catalog](missions/catalog.json)
 - [Company scenario: Atlas Retail](companies/atlas-retail/README.md)
 - [Engineering workflow](docs/ENGINEERING_LOOP.md)
-- [Mission roadmap](docs/NEXT_MISSIONS.md)
+- [Public curriculum roadmap](docs/PUBLIC_CURRICULUM.md) and [mission roadmap](docs/NEXT_MISSIONS.md)
 - [AI mentor policy](mentor/REVIEW_POLICY.md) — guidelines only, no bot deployed
 
 ## Public release principles
