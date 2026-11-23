@@ -1,0 +1,72 @@
+{
+  "schema_version": 1,
+  "skills": [
+    {
+      "id": "git-basics",
+      "prerequisites": [],
+      "description": "Clone, status, add, commit and push"
+    },
+    {
+      "id": "git-branches",
+      "prerequisites": [
+        "git-basics"
+      ],
+      "description": "Branch, PR, review, merge and rebase"
+    },
+    {
+      "id": "python-data",
+      "prerequisites": [],
+      "description": "CSV, typed values, exceptions and functions"
+    },
+    {
+      "id": "data-quality",
+      "prerequisites": [
+        "python-data"
+      ],
+      "description": "Data contracts, validation and rejects"
+    },
+    {
+      "id": "testing",
+      "prerequisites": [
+        "python-data"
+      ],
+      "description": "Reproducible unit tests and regression checks"
+    },
+    {
+      "id": "data-idempotency",
+      "prerequisites": [
+        "data-quality",
+        "testing"
+      ],
+      "description": "Deduplication, retries and business keys"
+    },
+    {
+      "id": "sql-transactions",
+      "prerequisites": [
+        "data-idempotency"
+      ],
+      "description": "ACID, uniqueness, rollback and isolation"
+    },
+    {
+      "id": "distributed-systems",
+      "prerequisites": [
+        "sql-transactions"
+      ],
+      "description": "Failures, partitions, consistency and ordering"
+    },
+    {
+      "id": "kafka",
+      "prerequisites": [
+        "distributed-systems"
+      ],
+      "description": "Logs, offsets, partitions and replay"
+    },
+    {
+      "id": "cloud-networking",
+      "prerequisites": [
+        "git-basics"
+      ],
+      "description": "DNS, TCP, subnet routes and service access"
+    }
+  ]
+}

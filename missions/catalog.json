@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "missions": [
+    {
+      "id": "retail-001",
+      "name": "Incorrect revenue after ETL retry",
+      "company": "atlas-retail",
+      "level": "trainee",
+      "status": "ready",
+      "path": "missions/retail-001",
+      "starter": "missions/retail-001/starter/pipeline.py",
+      "submission": "submissions/retail-001/pipeline.py",
+      "grader": "missions/retail-001/tests",
+      "skills": [
+        "git-branches",
+        "python-data",
+        "data-quality",
+        "testing",
+        "data-idempotency"
+      ],
+      "review": [
+        "Explain",
+        "Build",
+        "Recover",
+        "Defend"
+      ]
+    }
+  ]
+}
