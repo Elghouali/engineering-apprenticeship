@@ -26,7 +26,7 @@ A complete public learner journey must work without founder intervention: read a
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
 
 - [x] Verify Stage 1 integrated Kafka 4.4 broker -> PostgreSQL 16 event inbox -> S3-compatible Gold -> localhost HTTP against actual Docker services; includes a crash before broker acknowledgement, safe replay and 22,000-cent parity
-- [x] Verify real PySpark 4.0.3 over the bounded PostgreSQL snapshot, exact financial parity and created/replayed S3 Gold publication
+- [x] Verify initial bounded PySpark 4.0.3 bridge against PostgreSQL and S3 (superseded by partitioned JDBC read below)
 - [x] Verify an actual Airflow 3 Task SDK DAG executing the SAME Kafka, PostgreSQL and S3 stages, with 5 accepted events and verified 22,000 cents
 - [x] Replace the fixed 1,000-event driver snapshot with direct partitioned PostgreSQL JDBC Spark reads; verify 2,403 durable events and immutable report replay in real local CI
 - [ ] Prove much larger and multi-worker Spark performance/recovery, integrated historical Airflow scheduler backfills and Kubernetes deployment/recovery
