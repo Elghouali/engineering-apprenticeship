@@ -70,3 +70,31 @@ jobs:
         run: docker compose -f missions/data-005/docker-compose.yml config --quiet
       - name: Validate integrated Kafka/Postgres/S3 local Compose contract
         run: docker compose -f capstones/atlas-retail-integrated/compose.yaml config --quiet
+
+  integrated-stack-runtime:
+    # Only trusted maintainer pushes run this container integration. No PR secrets.
+    if: github.repository == 'Elghouali/engineering-apprenticeship' && github.event_name == 'push'
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - name: Validate integrated Compose
+        run: docker compose -f capstones/atlas-retail-integrated/compose.yaml config --quiet
+      - name: Real Kafka-Postgres-S3-HTTP crash/replay integration
+        run: bash capstones/atlas-retail-integrated/ci/smoke.sh
+      - name: Failure diagnostics from disposable containers
+        if: failure()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose ps || true
+          docker compose logs --tail=100 || true
+      - name: Always delete synthetic test volumes
+        if: always()
+        run: |
+          cd capstones/atlas-retail-integrated
+          docker compose --profile tools --profile api down -v --remove-orphans || true
