@@ -1,91 +1,129 @@
-# Engineering Apprenticeship — Learn Engineering by Shipping on GitHub
+# Engineering Apprenticeship
 
-> **PRE-RELEASE: Building for public learners. Not yet a complete academy.** This public repository is under active development. See [Public Launch Gate](docs/PUBLIC_LAUNCH.md) before recommending it as a finished training product.
+**Learn Big Data & Cloud Engineering by doing the work on GitHub.**
 
-Our goal is an open-source, **GitHub-native Big Data and Cloud Engineering apprenticeship**. No course website. Learners become engineers by receiving realistic tickets, investigating intentionally broken code, fixing it, documenting operational decisions and reviewing pull requests.
+> **PUBLIC PRE-RELEASE — not ready for learners or a v1 announcement.** This repository is visible while the curriculum is being built. All 12 missions are **prototypes**, and an independent beginner-to-capstone learner journey has **not** been verified. [Track the release gates](docs/PUBLIC_LAUNCH.md). **A public repository is not automatically open-source licensed**; redistribution terms are [awaiting owner approval](docs/LICENSING_DECISION.md).
 
-**Two audiences:**
-- **Public learners (after launch):** [Learner Guide](docs/LEARNER_GUIDE.md) and [GitHub skills field guide](docs/GITHUB_WORKFLOW.md) — fork the repository, work in your own branch, use your own GitHub Actions, keep assignments out of the upstream main branch.
-- **Maintainers and contributors:** [Maintainer Guide](docs/MAINTAINER_GUIDE.md) · [Contributing](CONTRIBUTING.md) · [Security](SECURITY.md) · [Licensing decision](docs/LICENSING_DECISION.md).
+Engineering Apprenticeship is an emerging **GitHub-native, issue-driven engineering school**. You don't watch a generic course and submit a quiz. You join a fictional engineering team, investigate a business incident, learn only the necessary concepts, ship a fix on a branch, interpret CI failures, defend the design in a pull request, and recover from operational failures.
 
-## The method: PR-Driven Apprenticeship
+There is **no separate web academy**. GitHub is the learning interface: Issues, branches, commits, PRs, Actions, reviews, project history and eventually releases. The approach is **learning by maintaining a changing system**, not copying completed tutorials.
+
+## Start here
+
+| I'm here to… | Where to go |
+| --- | --- |
+| Understand the idea in 2 minutes | [How the engineering loop works](docs/ENGINEERING_LOOP.md) |
+| Find my first challenge | [RETAIL-001](missions/retail-001/README.md) for Data; [CLOUD-001](missions/cloud-001/README.md) for Cloud |
+| See the entire mission progression | [Mission directory](missions/README.md) and [skills graph](skills/graph.json) |
+| Learn Git and GitHub through the tasks | [GitHub Field Guide](docs/GITHUB_WORKFLOW.md) |
+| Learn how to use a personal fork | [Learner Guide](docs/LEARNER_GUIDE.md) — for use after launch |
+| Understand our fictional employer | [Atlas Retail](companies/atlas-retail/README.md) |
+| Inspect a running reference system | [Local data-product capstone](capstones/atlas-retail-platform/README.md) |
+| Improve the academy itself | [Contributing](CONTRIBUTING.md) and [Maintainer Handbook](docs/MAINTAINER_GUIDE.md) |
+| Check what is actually finished | [Public launch checklist](docs/PUBLIC_LAUNCH.md) and [evidence library](docs/README.md) |
+
+## The method: a professional engineering loop
 
 ~~~mermaid
 flowchart LR
-  I[Company work ticket] --> F[Personal GitHub fork + branch]
-  F --> B[Reproduce real incident]
-  B --> L[Learn necessary concepts]
-  L --> C[Build + run tests]
-  C --> CI[GitHub Actions]
-  CI -->|Fail| B
-  CI -->|Pass| R[Explain, review and recover]
-  R --> N[Next evolving task]
+  I["Fictional company incident"] --> B["GitHub Issue + acceptance contract"]
+  B --> F["Personal fork and mission branch"]
+  F --> R["Reproduce the fault"]
+  R --> L["Investigate and learn"]
+  L --> X["Implement + test"]
+  X --> C{"GitHub Actions"}
+  C -->|"Failure"| R
+  C -->|"Checks pass"| P["Explain, review, recover in a PR"]
+  P --> N["Next incident in the same company"]
 ~~~
 
-GitHub itself is the classroom: Issues are work requests, branches are experiments, CI exposes failures, reviews demand reasoning, and accepted projects build a verifiable portfolio. A successful CI run **is not** a certification.
+A green check **does not mean professional certification**. The learner must explain the root cause, demonstrate before/after behavior, handle realistic failure modes, and discuss trade-offs. We assess work through **Explain → Build → Recover → Defend**, not the number of videos consumed.
 
-## Available mission prototypes (for maintainer evaluation)
+### A connected company, not unrelated tutorials
 
-| ID | Company role | Incident | Concepts |
+Our first employer is **[Atlas Retail](companies/atlas-retail/README.md)**, a fictional retailer whose finance and engineering teams depend on reliable data. In early tickets you fix duplicated orders. Later incidents involve SQL transactions, stale dashboards, Spark skew, Kafka replay, Airflow backfills, Docker networking, infrastructure review and Kubernetes rollouts. Some missions are independent exercises sharing business context; a full learner-owned integrated platform is **still under development**.
+
+## Curriculum: 12 working prototypes
+
+The paths below are the **intended order based on prerequisites**, not a promise that every lab is equally easy or production-ready. Read each mission's full contract before beginning.
+
+### Data Engineering
+
+| Mission | Business problem | Technology | Prerequisites |
 | --- | --- | --- | --- |
-| [RETAIL-001](missions/retail-001/README.md) | Trainee Data Engineer | Duplicate/cancelled sales distort revenue | Git, Python, validation, exact money |
-| [RETAIL-002](missions/retail-002/README.md) | Junior Data Engineer | Payment API retry creates duplicate row | SQL, transactions, idempotency |
-| [CLOUD-001](missions/cloud-001/README.md) | Trainee Cloud Engineer | HTTP 503 interrupts reporting API | HTTP, network errors, bounded retries |
-| [RETAIL-003](missions/retail-003/README.md) | On-call Data Engineer | Pipeline green but source data stale | Freshness SLOs, monitoring, incidents |
-| [CLOUD-002](missions/cloud-002/README.md) | Junior Cloud Engineer | Published artifact silently overwritten | Object storage, SHA-256, safe keys |
-| [DATA-004](missions/data-004/README.md) | Data Engineer | Slow skewed Spark job and replayed transactions | PySpark, shuffle, salting, correctness |
-| [DATA-005](missions/data-005/README.md) | Streaming Engineer | Kafka replay after durable ledger commit | Broker offsets, SQLite inbox, idempotency |
-| [DATA-006](missions/data-006/README.md) | Platform Engineer | Airflow backfill overwrites daily report | DAGs, retries, partitioned atomic publication |
-| [CLOUD-003](missions/cloud-003/README.md) | Cloud Engineer | Reporting API cannot resolve internal ledger | Docker DNS, bridge networks, port exposure |
-| [CLOUD-004](missions/cloud-004/README.md) | Cloud Platform Engineer | Dangerous Terraform replacement and drift | Plan JSON, drift, protected resources |
-| [CLOUD-005](missions/cloud-005/README.md) | Cloud Security Engineer | Reporting service has wildcard S3 access | IAM, least privilege, object ARN scoping |
-| [CLOUD-006](missions/cloud-006/README.md) | Cloud Platform Engineer | Reports deployment stuck unready | Kubernetes Deployment, probes, Services, rollout |
+| [RETAIL-001](missions/retail-001/README.md) | Duplicate and invalid orders corrupt revenue | Git, Python, testing, exact money | None |
+| [RETAIL-002](missions/retail-002/README.md) | A retry charges the same payment twice | SQLite, constraints, ACID | RETAIL-001 |
+| [RETAIL-003](missions/retail-003/README.md) | The job is green but reporting is stale | Freshness, data-quality SLIs | RETAIL-001 + 002 |
+| [DATA-004](missions/data-004/README.md) | One merchant skews an aggregation | PySpark, shuffle, salting | RETAIL-003 |
+| [DATA-005](missions/data-005/README.md) | A consumer crash doubles wallet credit | Kafka offsets, durable inbox | RETAIL-002 |
+| [DATA-006](missions/data-006/README.md) | Retry/backfill overwrites the wrong partition | Airflow 3, DAGs, recovery | RETAIL-003 + DATA-004 + 005 |
 
-Advanced missions include **maintainer-verified real local PySpark aggregation** (DATA-004) and **a real local Kafka broker crash/replay smoke test** (DATA-005), plus a validated Airflow Task SDK DAG structure (DATA-006). A measured Spark comparison and a controlled **real Airflow scheduler-managed historical backfill** have now passed maintainer CI. These validate a local synthetic environment, not production scalability or a public learner rollout. These are still prototypes pending wider public learner acceptance testing.
+### Cloud Computing and Platform Engineering
 
-**Cloud engineering integration evidence:** [CLOUD-003 through CLOUD-006](docs/CLOUD_SPRINT_EVIDENCE.md) have passed confidential reference tests. Maintainer CI has run real Docker service DNS, generated a real provider-free Terraform plan, and used a disposable Kubernetes kind cluster for readiness, failed rollout and rollback. The S3 policy mission is checked structurally only, without an AWS authorization test.
+| Mission | Business problem | Technology | Prerequisites |
+| --- | --- | --- | --- |
+| [CLOUD-001](missions/cloud-001/README.md) | Reporting API intermittently returns 503 | HTTP, retries, backoff | None |
+| [CLOUD-002](missions/cloud-002/README.md) | Published report was overwritten | SHA-256, object-storage contracts | CLOUD-001 |
+| [CLOUD-003](missions/cloud-003/README.md) | API cannot resolve a private ledger | Docker, DNS, bridge network | CLOUD-001 |
+| [CLOUD-004](missions/cloud-004/README.md) | Infrastructure plan contains dangerous changes | Terraform, plan JSON, drift | CLOUD-002 + 003 |
+| [CLOUD-005](missions/cloud-005/README.md) | Service receives wildcard storage permissions | S3 IAM, least privilege | CLOUD-002 + 004 |
+| [CLOUD-006](missions/cloud-006/README.md) | Deployment has no Ready endpoints | Kubernetes, probes, rollback | CLOUD-003 + 004 |
 
-These starter missions are part of the academy **under construction**. The full progression from foundations through Spark, Kafka, Cloud and capstone delivery has not yet been completed or integration-verified.
+**Maturity:** All 12 are marked \`prototype\` in the [machine-readable catalog](missions/catalog.json). Correct private references have passed the public contracts, and selected real local runtime integrations were validated. This does **not** replace independent learner testing. Advanced SQL/warehouse work, multi-cloud resilience and the full learner-assigned capstone are still planned in the [curriculum roadmap](docs/PUBLIC_CURRICULUM.md).
 
-## Runnable end-to-end reference system
+## Preview the learner workflow (do not submit homework upstream yet)
 
-The [Atlas Retail Data Platform](capstones/atlas-retail-platform/README.md) combines CSV contracts, idempotent processing, SQLite, Gold revenue output, immutable release folders, cryptographic artifact checks and data freshness monitoring. It runs locally without any paid cloud services, and CI executes its integration tests.
-
-This reference is for **maintainer validation and future cumulative incidents**; the learner capstone assignment is still being developed.
-
-## Core developer commands
+**Required for basic missions:** free GitHub account, Git, Python **3.11+**, a terminal and an editor. Docker/Java/PySpark/Terraform/Kubernetes tooling is **optional and mission-specific**. A paid cloud account is **not required** for the currently documented local labs.
 
 ~~~bash
+# After forking the academy on GitHub, clone YOUR own copy.
+git clone https://github.com/YOUR-USERNAME/engineering-apprenticeship.git
+cd engineering-apprenticeship
+git switch -c mission/retail-001
+
 python tools/apprentice.py doctor
 python tools/apprentice.py list
-python -m unittest discover -s tests -v
-~~~
-
-For learners in **their own fork and personal mission branch**:
-
-~~~bash
 python tools/apprentice.py start retail-001
 python tools/apprentice.py check retail-001
 ~~~
 
-The starter is deliberately faulty; initial test failures are expected. The start command refuses to overwrite submissions and will not run on main.
+The first \`check\` **is expected to fail**: the copied starter deliberately contains the business bug. Correct only \`submissions/retail-001/pipeline.py\`; do not edit the official grader to make it green. The starter command will not overwrite existing work or run on \`main\`.
 
-## Existing resources
+After correcting the solution in a learner's **own fork**, run checks, commit, push and open a PR **within that fork** (base = the learner's main; compare = the mission branch). Never send homework to the central academy's upstream main. See the [full fork-to-PR procedure](docs/GITHUB_WORKFLOW.md).
 
-- [Big Data & Cloud Academy technical references](https://github.com/Elghouali/BigData/tree/feature/academy-data-cloud-from-zero/academy)
-- [Skills and prerequisites](skills/graph.json)
-- [Mission catalog](missions/catalog.json)
-- [Company scenario: Atlas Retail](companies/atlas-retail/README.md)
-- [Engineering workflow](docs/ENGINEERING_LOOP.md)
-- [Public curriculum roadmap](docs/PUBLIC_CURRICULUM.md) and [mission roadmap](docs/NEXT_MISSIONS.md)
-- [AI mentor policy](mentor/REVIEW_POLICY.md) — guidelines only, no bot deployed
+**Maintainer check, independent of homework:**
 
-## Public release principles
+~~~bash
+python -m unittest discover -s tests -v
+python -m unittest discover -s capstones/atlas-retail-platform/tests -v
+python tools/verify_links.py
+~~~
 
-1. No unfinished mission advertised as ready.
-2. One end-to-end successful learner journey must be independently validated.
-3. Local-only foundation exercises; no mandatory cloud billing.
-4. No privileged code execution, data leaks or fake skill certifications.
-5. Code and educational-content licenses must be approved before v1 release.
+On Windows, \`py -3\` may replace \`python\`; in PowerShell use the same Python CLI arguments. Some advanced tests require explicit opt-in environment variables; see the relevant mission README. Running untrusted learner code outside a disposable environment is unsafe.
 
-**Current status: product build in progress. Not accepting personal exercise submissions to upstream.**
+## Reference platform and verification evidence
+
+The [Atlas Retail local data product](capstones/atlas-retail-platform/README.md) currently implements synthetic CSV ingestion → validation/deduplication → SQLite → Gold revenue → checked release manifests → freshness checks → a **localhost-only HTTP API**. It runs without installing distributed services.
+
+Maintainer-only CI separately tested correct references on Linux and Windows and selected runtime paths: [Spark benchmark](docs/SPARK_BENCHMARK_EVIDENCE.md), [Kafka replay](missions/data-005/README.md), [Airflow scheduler backfill](docs/AIRFLOW_BACKFILL_EVIDENCE.md) and [Docker/Terraform/Kubernetes evidence](docs/CLOUD_SPRINT_EVIDENCE.md). **S3 IAM was structurally tested, not authorized against AWS.** Correct reference implementations are kept in a separate **private** maintainer repository and are never part of public exercises.
+
+This repo is **already public to inspect**, but the educational release has not launched. Public CI and private reference success do not prove that a new learner can finish the academy unaided.
+
+## Open development roadmap
+
+1. **Complete the README and onboarding system**, then test it with real first-time users.
+2. Build the **learner-assigned, end-to-end Data + Cloud capstone** connecting ingestion, Kafka, Spark, orchestration, storage, deployment, observability and incident recovery.
+3. Expand SQL/warehousing, multi-cloud foundations, production operations and resilient workloads.
+4. Run independent Windows/Linux fork → branch → CI → PR acceptance tests.
+5. Finalize licenses, repo security and protected-branch rules, conduct a release review and only then tag v1.
+
+See the [active release checklist](docs/PUBLIC_LAUNCH.md), [curriculum plan](docs/PUBLIC_CURRICULUM.md) and [contributor guidance](CONTRIBUTING.md). Please do not treat \`prototype\` as \`ready\` or represent this repository as a finished training product.
+
+## License, community and safety
+
+- **Licenses not granted yet.** Code MIT and educational text CC BY 4.0 have been proposed, but must be approved by the owner before redistribution.
+- **Synthetic data only.** No real financial records, production credentials, mandatory paid services or automatic cloud provisioning.
+- **Security:** [Security policy](SECURITY.md); [code of conduct](CODE_OF_CONDUCT.md); [contributing guidelines](CONTRIBUTING.md).
+- **Trust boundaries:** Public learner code runs in personal forks, never in a privileged maintainer job. Green tests measure contract behavior, not human competence.
+
+**Current state: public source, private answer validation, pre-release curriculum.**
