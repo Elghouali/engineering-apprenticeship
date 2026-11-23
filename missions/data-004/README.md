@@ -1,5 +1,7 @@
 # DATA-004 — Skewed Spark aggregation overwhelms one worker
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail · **Role:** Data Engineer · **Prerequisite:** RETAIL-003
 
 ## The workplace incident
@@ -70,3 +72,29 @@ A valid PySpark version and Java runtime are required for SPARK_LIVE=1. The dedi
 **Official references:** https://spark.apache.org/docs/4.0.3/sql-performance-tuning.html and https://spark.apache.org/docs/4.0.3/api/python/getting_started/install.html
 
 **Status:** prototype. A correct public mission contract is not proof of measured production scalability.
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+ for planner tests; live Spark tests require Java 17, compatible PySpark and SPARK_LIVE=1. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/spark_job.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/data-004/spark_job.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/data-004
+python tools/apprentice.py start data-004
+python tools/apprentice.py check data-004
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Compare replay-safe aggregation with and without salting. Never claim speedup without measuring.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [DATA-006](../data-006/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

@@ -1,5 +1,7 @@
 # Mission RETAIL-001 — Incorrect Revenue After an ETL Retry
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** [Atlas Retail](../../companies/atlas-retail/README.md)  
 **Role:** Junior Data Engineer (Trainee)  
 **Priority:** P0 — finance reporting is incorrect  
@@ -82,3 +84,29 @@ Open a PR with **your own fork as the base repository** (base main, compare miss
 - [Git branching](https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell)
 
 If blocked, consult the [mentor hint policy](../../mentor/REVIEW_POLICY.md). Ask for one hint, not the full solution.
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+; standard library only. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/pipeline.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/retail-001/pipeline.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/retail-001
+python tools/apprentice.py start retail-001
+python tools/apprentice.py check retail-001
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Show that an exact replay does not increase revenue and an invalid or conflicting order is quarantined.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [RETAIL-002](../retail-002/README.md), [RETAIL-003](../retail-003/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

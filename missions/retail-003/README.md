@@ -1,5 +1,7 @@
 # RETAIL-003 — The pipeline is green but finance sees yesterday's figures
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail · **Role:** On-call Data Engineer · **Prerequisites:** RETAIL-001, RETAIL-002
 
 ## Incident and business risk
@@ -66,3 +68,29 @@ Write an incident timeline explaining how a green job can publish stale data, se
 - https://sre.google/sre-book/monitoring-distributed-systems/
 
 **No real production alerts or cloud services are sent.**
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+; deterministic timestamps and no external monitoring service. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/monitor.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/retail-003/monitor.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/retail-003
+python tools/apprentice.py start retail-003
+python tools/apprentice.py check retail-003
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Show how a green job can still publish old business data and trigger an alert.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [DATA-004](../data-004/README.md), [DATA-006](../data-006/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)

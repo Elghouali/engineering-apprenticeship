@@ -1,5 +1,7 @@
 # RETAIL-002 — Payment recorded twice after an API timeout
 
+> **PRE-RELEASE / PROTOTYPE — contract v1.** This exercise has a public grader and a confidential correct reference, but independent first-time learner onboarding has not yet passed.
+
 **Company:** Atlas Retail · **Role:** Junior Backend/Data Engineer · **Prerequisite:** RETAIL-001 (idempotency basics)
 
 ## Business incident
@@ -57,3 +59,29 @@ The starter intentionally fails. Do not change the original starter or grader.
 This is an educational local SQLite example; concurrency under different database engines and external payment service coordination require further design.
 
 **Open reference:** https://www.sqlite.org/lang_conflict.html ; https://www.sqlite.org/lang_transaction.html
+
+---
+
+## Mission handoff: from incident to pull request
+
+**Requirements:** Python 3.11+ and bundled SQLite; no real payment gateway. Read the contract above before changing code.
+
+**Training files:** [faulty starter](starter/payment.py) · [public acceptance tests](tests/test_submission.py) · personal output: `submissions/retail-002/payment.py` (created only in a learner fork, not committed upstream).
+
+From the **root of your own fork**, after public launch:
+
+```bash
+git switch -c mission/retail-002
+python tools/apprentice.py start retail-002
+python tools/apprentice.py check retail-002
+```
+
+The first test run must fail because the starter is intentionally defective. Implement and test only in your submission; do not edit official graders. Push to your fork and open a PR **against your own fork's main branch**, not the academy upstream.
+
+**Failure-recovery drill:** Commit a payment, retry the same request ID, and prove only one durable payment exists.
+
+In your PR, demonstrate **Explain / Build / Recover / Defend**: root cause, passing regression checks, recovery behavior and trade-offs. See the [review rubric](../../docs/ENGINEERING_LOOP.md) and [hint policy](../../mentor/REVIEW_POLICY.md).
+
+**Continue to:** [RETAIL-003](../retail-003/README.md), [DATA-005](../data-005/README.md). These are suggestions; use the [catalog](../catalog.json) for exact prerequisites.
+
+[← All missions](../README.md) · [Academy](../../README.md) · [Company](../../companies/atlas-retail/README.md) · [Documentation](../../docs/README.md)
