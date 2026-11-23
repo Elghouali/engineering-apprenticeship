@@ -20,8 +20,8 @@ The longer-term aspiration is adaptive missions, human or AI-assisted code revie
 
 ## Advanced Data Engineering sprint (prototype work)
 
-- [DATA-004](../missions/data-004/README.md): actual Spark skew investigation, salted aggregation and explicit replay handling; live Spark integration opt-in.
-- [DATA-005](../missions/data-005/README.md): durable inbox and ledger processing with simulated commit-before-ack crash; live Kafka broker pending.
-- [DATA-006](../missions/data-006/README.md): Airflow-style DAG and idempotent partition publishing/backfill; actual scheduler pending.
+- [DATA-004](../missions/data-004/README.md): skew investigation, salted aggregation and replay handling; local Spark correctness validated in maintainer CI (measured performance benchmarks pending).
+- [DATA-005](../missions/data-005/README.md): durable inbox and ledger processing with simulated crash and a real single-node Kafka smoke test validated in maintainer CI.
+- [DATA-006](../missions/data-006/README.md): Airflow 3 Task SDK DAG object/dependencies and idempotent partition publishing validated; live Airflow scheduler/backfill still pending.
 
 All prototypes must pass private maintainer reference validation and receive an independent learner test before being marked ready.

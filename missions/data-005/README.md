@@ -71,4 +71,4 @@ Do not claim that running unit tests is the same as verifying live Kafka semanti
 
 **Official references:** https://kafka.apache.org/documentation/#semantics and https://www.sqlite.org/lang_transaction.html
 
-**Status:** prototype, deterministic recovery simulation only.
+**Status:** prototype. The broker smoke harness has now passed in maintainer CI against a real local Apache Kafka Docker broker and confidential reference solution. This verifies a single-node, one-partition crash/replay test, **not** a production multi-broker deployment, partition rebalance exercise or independent learner submission.

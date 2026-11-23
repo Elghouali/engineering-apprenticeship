@@ -12,7 +12,10 @@ A complete public learner journey must work without founder intervention: read a
 
 - [x] GitHub-native mission scaffolding, company story and skills graph
 - [x] Basic platform tests and least-privilege CI
-- [ ] Multiple connected Big Data missions with verified correct reference implementations (five prototypes exist across tracks)
+- [x] Eight current mission prototype contracts pass correct confidential reference solutions on Ubuntu and Windows
+- [x] Live single-node local Kafka replay and local PySpark functional integration verified in maintainer CI
+- [x] Airflow 3 Task SDK DAG object/dependency verification in maintainer CI
+- [ ] Complete advanced Big Data curriculum, full Airflow scheduling/backfill and measured Spark tuning evidence
 - [ ] Multiple connected Cloud Engineering missions including local networking and containers
 - [x] Local end-to-end reference data product: real SQLite, immutable release, replay/tamper/quality failure tests in CI
 - [ ] Complete **learner-assigned** end-to-end Data/Cloud project, independently validated on a clean checkout with operations runbook

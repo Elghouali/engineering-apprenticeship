@@ -37,7 +37,7 @@ GitHub itself is the classroom: Issues are work requests, branches are experimen
 | [DATA-005](missions/data-005/README.md) | Streaming Engineer | Kafka replay after durable ledger commit | Broker offsets, SQLite inbox, idempotency |
 | [DATA-006](missions/data-006/README.md) | Platform Engineer | Airflow backfill overwrites daily report | DAGs, retries, partitioned atomic publication |
 
-The advanced three missions are **not all live-service verified yet**. DATA-004 has opt-in real PySpark tests, DATA-005 simulates broker replay against durable SQLite, and DATA-006 tests partition task logic with an optional Airflow DAG structural check. See each mission for exact verification limits.
+Advanced missions include **maintainer-verified real local PySpark aggregation** (DATA-004) and **a real local Kafka broker crash/replay smoke test** (DATA-005), plus a validated Airflow Task SDK DAG structure (DATA-006). A measured Spark performance benchmark and a complete running Airflow scheduler/backfill have **not** been verified. These are still prototypes pending wider public learner acceptance testing.
 
 These starter missions are part of the academy **under construction**. The full progression from foundations through Spark, Kafka, Cloud and capstone delivery has not yet been completed or integration-verified.
 
