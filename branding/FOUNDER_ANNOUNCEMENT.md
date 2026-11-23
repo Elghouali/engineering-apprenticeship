@@ -1,40 +1,37 @@
-# Founder announcement draft — LinkedIn
+# Founder announcement draft — LinkedIn (HOLD UNTIL v1.0)
 
-> **DRAFT — manual publication only.** This file is not a published LinkedIn post. Check the README, release gate and latest GitHub Actions before posting. The Academy remains a public pre-release and is not accepting learners yet.
+> **NOT FOR PUBLICATION YET — FOUNDER DECISION, 2026-11-23.** The founder explicitly decided to hold the LinkedIn announcement until Engineering Apprenticeship **v1.0 is completed, independently validated, and approved for release**. Do not publish this post, update LinkedIn to promote launch, schedule it, or imply enrollment is open before that point. This is a working draft only.
 
-## Post
+## Publication conditions
 
-What if learning engineering meant fixing a broken system instead of just completing another tutorial?
+- [ ] All mandatory technical, learner journey, licensing and security gates in [PUBLIC_LAUNCH.md](../docs/PUBLIC_LAUNCH.md) are complete.
+- [ ] Draft PR is reviewed and merged, main README reflects the actual v1.0 feature set, and v1.0 release/tag exists.
+- [ ] Founder reviews and explicitly approves final announcement copy and publication.
+- [ ] Post links to the **v1.0 release or merged main** (not a development branch).
+- [ ] All numbers, mission statuses, onboarding claims and availability details have been verified against v1.0.
 
-I’m building **Engineering Apprenticeship** — a GitHub-native engineering academy designed around real engineering work.
+## Announcement concept (to rewrite after release)
 
-The concept: learners enter a fictional engineering team, receive incidents as GitHub Issues, reproduce failures, investigate the root cause, implement fixes, run CI, and defend their decisions through pull requests.
+**Engineering Apprenticeship — Learn by fixing what breaks.**
 
-**Learn by fixing what breaks.**
+What if you learned engineering by investigating broken systems instead of only watching tutorials?
 
-Our first tracks focus on **Data Engineering** and **Cloud/Platform Engineering**. We’re developing practical missions around Python, SQL, Spark, Kafka, Airflow, Docker, Terraform and Kubernetes, together with a connected data platform for a fictional retailer.
+I created Engineering Apprenticeship to make hands-on, GitHub-native engineering learning more practical. Learners work through realistic incidents, reproduce failures, fix systems, use CI and PR reviews, and explain technical decisions.
 
-This is **a public pre-release project, not a finished training program**. The repository currently contains twelve mission prototypes and a locally tested integrated platform. Independent learner onboarding and the complete capstone journey still need validation.
+**[Insert only verified v1.0 capabilities, tracks, capstone scope and onboarding instructions after release.]**
 
-I’ll share the engineering decisions, mistakes, architecture and milestones as the project develops.
+**[Insert official v1.0 URL after the merge/tag.]**
 
-I’d value feedback from Data Engineers, Cloud Engineers, educators and potential contributors: **What is the biggest skill gap you see between completing tutorials and solving problems at work?**
+I'd welcome feedback from engineers, educators and learners about the real-world learning experience.
 
-Explore the public development repository:
-https://github.com/Elghouali/engineering-apprenticeship/tree/feat/github-native-mvp
+#DataEngineering #CloudComputing #GitHub
 
-#DataEngineering #CloudComputing #GitHub #BuildInPublic
+## Suggested future founder profile text (not yet applied)
 
-## Suggested profile text
+**Headline:** Founder of Engineering Apprenticeship | GitHub-Native Engineering Academy | Big Data & Cloud Engineering
 
-**Headline:** Founder of Engineering Apprenticeship | Building a GitHub-Native Engineering Academy | Big Data & Cloud Engineering
+**About:** [Write the final, accurately verified v1.0 product description after public release.]
 
-**About (short):** Engineering student and founder of Engineering Apprenticeship, a public pre-release GitHub-native engineering learning project. Building practical incident-driven challenges, CI workflows and connected Data + Cloud systems, with open development and evidence-based release gates.
+## Publishing policy
 
-## Publication checklist
-
-- [ ] Confirm all technical and maturity claims reflect the current repository.
-- [ ] Use the feature-branch link until the draft PR is merged, not the blank main README.
-- [ ] Use the brand banner and a transparent **pre-release** label.
-- [ ] Publish manually on LinkedIn; this GitHub commit does not publish a social post.
-- [ ] Respond to meaningful technical feedback without promising enrollment or certification.
+Keep the draft and visual assets in the repository for later use. No LinkedIn announcement, launch advertising, or automated post scheduling before the founder signs off on v1.0. Keeping the GitHub code publicly visible during development is not a marketing announcement.
