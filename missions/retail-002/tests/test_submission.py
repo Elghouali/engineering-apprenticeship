@@ -30,7 +30,7 @@ class PaymentTests(unittest.TestCase):
         self.addCleanup(self.temp.cleanup)
         self.database = Path(self.temp.name) / "payments.db"
         self.db = sqlite3.connect(self.database)
-        self.addCleanup(self.db.close)
+        self.addCleanup(lambda: self.db.close())
         self.mod.setup(self.db)
 
     def n(self):
