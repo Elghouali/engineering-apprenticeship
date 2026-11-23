@@ -5,6 +5,7 @@ Python 3.11+ / standard library only. Educational, not a cloud deployment.
 from __future__ import annotations
 
 import argparse
+from contextlib import closing
 import csv
 from datetime import date, datetime, timezone
 from decimal import Decimal, InvalidOperation
@@ -92,7 +93,7 @@ def collect(source: Path) -> tuple[list[dict], list[dict], dict]:
 
 def write_artifacts(folder: Path, accepted: list[dict], rejected: list[dict]) -> dict:
     db_path = folder / "orders.db"
-    with sqlite3.connect(db_path) as db:
+    with closing(sqlite3.connect(db_path)) as db:
         with db:
             db.execute("""
                 CREATE TABLE orders(
@@ -138,8 +139,8 @@ def verify(output: Path) -> dict:
     for name in ARTIFACTS:
         if manifest["files"].get(name) != digest(folder / name):
             raise ValueError("artifact_checksum_mismatch:" + name)
-    with sqlite3.connect(f"file:{(folder / 'orders.db').resolve()}?mode=ro",
-                         uri=True) as db:
+    with closing(sqlite3.connect(f"file:{(folder / 'orders.db').resolve()}?mode=ro",
+                                 uri=True)) as db:
         count = db.execute("SELECT COUNT(*) FROM orders").fetchone()[0]
         revenue = db.execute(
             "SELECT COALESCE(SUM(quantity * unit_price_cents),0)"
