@@ -22,7 +22,7 @@ def fixture():
         event = {
             "event_id": f"scale-{i:07d}",
             "merchant_id": "merchant-hot" if i % 10 != 0 else
-                           ("merchant-cold-a" if i % 2 else "merchant-cold-b"),
+                           ("merchant-cold-a" if i % 20 == 0 else "merchant-cold-b"),
             "business_date": DAY,
             "amount_cents": (i % 7 + 1) * 100,
             "status": "cancelled" if i % 5 == 0 else "paid",
