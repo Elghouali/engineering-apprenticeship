@@ -24,6 +24,8 @@ class PlatformTests(unittest.TestCase):
             self.assertTrue((ROOT / item["grader"]).is_dir())
             self.assertTrue(item["review"])
             self.assertIn(item["status"], ("prototype", "ready"))
+            self.assertIsInstance(item["contract_version"], int)
+            self.assertGreater(item["contract_version"], 0)
         self.assertEqual(len(ids), len(set(ids)))
 
     def test_skill_dependency_graph_is_acyclic(self):

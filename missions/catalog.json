@@ -24,7 +24,8 @@
         "Build",
         "Recover",
         "Defend"
-      ]
+      ],
+      "contract_version": 1
     },
     {
       "id": "retail-002",
@@ -49,7 +50,8 @@
         "Build",
         "Recover",
         "Defend"
-      ]
+      ],
+      "contract_version": 1
     },
     {
       "id": "cloud-001",
@@ -72,7 +74,8 @@
         "Build",
         "Recover",
         "Defend"
-      ]
+      ],
+      "contract_version": 1
     },
     {
       "id": "retail-003",
@@ -98,7 +101,8 @@
         "Build",
         "Recover",
         "Defend"
-      ]
+      ],
+      "contract_version": 1
     },
     {
       "id": "cloud-002",
@@ -123,7 +127,8 @@
         "Build",
         "Recover",
         "Defend"
-      ]
+      ],
+      "contract_version": 1
     }
   ]
 }
