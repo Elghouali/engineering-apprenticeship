@@ -69,6 +69,23 @@ services:
       kafka: {condition: service_started}
       objectstore: {condition: service_started}
     networks: [platform]
+  airflow:
+    build:
+      context: .
+      dockerfile: Dockerfile.airflow
+    image: atlas-retail-integrated-airflow:dev
+    profiles: [airflow]
+    environment:
+      <<: *atlas-env
+      AIRFLOW_HOME: /tmp/atlas-airflow
+      AIRFLOW__CORE__LOAD_EXAMPLES: "false"
+      AIRFLOW__CORE__DAGS_FOLDER: /opt/airflow/dags
+      AIRFLOW__CORE__EXECUTOR: SequentialExecutor
+    depends_on:
+      postgres: {condition: service_healthy}
+      kafka: {condition: service_started}
+      objectstore: {condition: service_started}
+    networks: [platform]
   spark:
     build:
       context: .
