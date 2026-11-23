@@ -37,6 +37,24 @@ python -m unittest discover -s capstones/atlas-retail-platform/tests -v
 
 The fixture has **8 synthetic records** dated 2026-11-20: **4 accepted orders**, **1 exact replay duplicate**, **3 rejects**, and **22000 cents of paid revenue**. It is intentionally historical; a freshness check using today's date can report stale data. Use --as-of to reproduce expected on-call states.
 
+## Serve the verified Gold report over HTTP
+
+After building the release, start a local read-only reporting API:
+
+~~~bash
+python capstones/atlas-retail-platform/api.py --output capstones/atlas-retail-platform/output --port 8081
+~~~
+
+Local endpoints:
+
+- http://127.0.0.1:8081/health — checks artifact integrity, returns a release ID
+- http://127.0.0.1:8081/v1/revenue — returns typed Gold revenue rows
+- http://127.0.0.1:8081/v1/manifest — returns selected release provenance data
+
+If output has not been published or is corrupted, the API returns HTTP 503 instead of pretending the report is healthy. The service **binds only to 127.0.0.1** and has no authentication; it is for local training, not public deployment.
+
+The integration suite starts the server on an ephemeral port and tests live HTTP responses with a real SQLite release.
+
 ## Demonstrate workplace failure recovery
 
 1. Run build twice on the same file. The second run must not double counts or create a new release.
