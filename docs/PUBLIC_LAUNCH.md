@@ -55,6 +55,14 @@ A complete public learner journey must work without founder intervention: read a
 - [ ] Private vulnerability reporting method established
 - [ ] Release tag and change log produced after all gates pass
 
+## Branding and founder announcement gate
+
+**Founder decision (2026-11-23):** Hold Academy launch advertising and the LinkedIn founder announcement until **v1.0 is complete and independently validated**. Keep the [announcement draft](../branding/FOUNDER_ANNOUNCEMENT.md) unpublished. A visible development repository is not a v1 launch.
+
+- [ ] Approve final Academy brand name, trademark/domain/handle research, and visual identity.
+- [ ] Prepare a factual v1.0 announcement using only shipped, validated features and a main/release link.
+- [ ] Founder explicitly approves and publishes the LinkedIn launch announcement **after** all mandatory release gates, merge and versioned release.
+
 ## What is deliberately out of scope
 
 No website, expensive hosted cloud sandbox, automated learning certification, or privileged autonomous code executor. GitHub already provides Issues, branches, reviews and CI.
