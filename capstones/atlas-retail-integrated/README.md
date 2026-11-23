@@ -160,7 +160,7 @@ A full CI run executed and marked all four DAG tasks successful, returning 5 acc
 ### Reproducible isolated CI smoke scripts
 
 - `bash ci/smoke.sh` — real Kafka/Postgres/S3/API, crash-after-commit replay, verification.
-- `bash ci/spark.sh` — same durable records, Spark calculation, S3 artifact and replay.
+- `bash ci/spark.sh` — actual four-partition Spark JDBC over five and 2,403 durable rows, SQL parity, physical plans and S3 replay.
 - `bash ci/airflow.sh` — actual shared Airflow DAG task execution and financial verification.
 
 **All three scripts delete disposable Docker volumes after finishing**. Never run them against existing valuable data or a shared production context. See the [verified CI evidence report](../../docs/INTEGRATED_CAPSTONE_EVIDENCE.md).
