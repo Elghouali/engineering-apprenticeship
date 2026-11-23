@@ -6,10 +6,16 @@ Do not expose this training server to the public internet.
 from __future__ import annotations
 import argparse
 import csv
+import importlib.util
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
 from pathlib import Path
-from platform import verify
+# Use an explicit path to avoid collision with Python's stdlib platform module.
+spec = importlib.util.spec_from_file_location(
+    "atlas_retail_data_product", Path(__file__).with_name("platform.py"))
+data_product = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(data_product)
+verify = data_product.verify
 
 
 def create_server(output: Path, host: str = "127.0.0.1", port: int = 0):

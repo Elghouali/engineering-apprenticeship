@@ -11,8 +11,8 @@ from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
-from api import create_server
-from platform import build
+from api import create_server, data_product
+build = data_product.build
 
 FIXTURE = ROOT / "data" / "orders.csv"
 
